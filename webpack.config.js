@@ -10,13 +10,13 @@ var BUILD_DIR = path.resolve(__dirname, './client/dist');
 var APP_DIR = path.resolve(__dirname, './client/src');
 
 var config = {
-  entry: APP_DIR + '/index.js',
+  entry: ['babel-polyfill', APP_DIR + '/index.js'],
   output: {
     path: BUILD_DIR,
     filename: 'app.js',
   },
   module: {
-    loaders : [
+    loaders: [
       {
         test: /\.jsx?/,
         include: APP_DIR,
@@ -25,7 +25,7 @@ var config = {
       {
         test: /\.css$/,
         include: APP_DIR,
-        loader: [ 'style-loader', 'css-loader' ]
+        loader: ['style-loader', 'css-loader']
       }
     ]
   },
