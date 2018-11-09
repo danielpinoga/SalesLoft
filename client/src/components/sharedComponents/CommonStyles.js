@@ -16,3 +16,17 @@ export const Box = styled.div`
   border-top: 6px solid #4a90e2;
   grid-template: 30% 1fr / 1fr;
 `
+
+export const StyledCharContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 20vh;
+  width: 60vw;
+  border: 2px black solid;
+`
+
+export const StyledChar = styled.div`
+  margin: 2px 10px;
+`
