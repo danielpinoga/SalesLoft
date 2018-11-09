@@ -2,7 +2,7 @@ import { merge } from '../utils'
 import { UPDATE_EMAIL_CHARS } from '../actions/Constants'
 import { bindActionCreators } from 'redux';
 
-export function chars(
+export function emailAnalysis(
   state = {
     chars: {},
     showChars: false

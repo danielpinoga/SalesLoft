@@ -3,13 +3,13 @@ import { routerReducer } from 'react-router-redux'
 
 import { me } from './Me'
 import { people } from './People'
-import { chars } from './CharCount'
+import { emailAnalysis } from './EmailAnalysis'
 
 const Reducers = combineReducers({
   router: routerReducer,
   me,
   people,
-  chars
+  emailAnalysis
 });
 
 export default Reducers

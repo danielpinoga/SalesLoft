@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import CharCount from './CharCount'
@@ -42,20 +41,6 @@ class PeoplePage extends Component {
   }
 
   render() {
-    const countCharacters = () => {
-      const emailChars = this.props.people.reduce((charObject, person) => {
-        return person.email_address.split('').reduce((charObject, char) => {
-          if (char.match(/[a-z]/i)) {
-            charObject[char] ? charObject[char] += 1 : charObject[char] = 1
-          }
-          return charObject
-        }, charObject)
-      }, {})
-
-      this.props.updateEmailChars(emailChars, true)
-    }
-
-
     let peopleContent = this.props.people.map(person => {
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
@@ -66,10 +51,6 @@ class PeoplePage extends Component {
       )
     })
 
-    const charCountComponent = (
-      <CharCount charCount={this.props.charCount} />
-    )
-
     return (
       <PeoplePageWrapper>
         <h1>People Page</h1>
@@ -79,8 +60,7 @@ class PeoplePage extends Component {
           Go To Next Page
         </div>
 
-        <button onClick={countCharacters}>Update Char Count</button>
-
+        <CharCount />
         <StyledPeopleContainer>
           {peopleContent}
         </StyledPeopleContainer>
