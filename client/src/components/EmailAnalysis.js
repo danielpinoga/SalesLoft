@@ -47,17 +47,21 @@ const EmailAnalysis = (props) => {
     )
   })
 
+  const analysisContent = showAnalysis ?
+    (
+      <FlexBox>
+        <h1>Char Counts!</h1>
+        <StyledCharContainer>
+          {emailAnalysis}
+        </StyledCharContainer>
+      </FlexBox>
+    ) : (
+      <button onClick={analyzeEmails}>Display Email Analysis</button>
+    )
+
   return (
     <FlexBox>
-      <button onClick={analyzeEmails}>Display Email Analysis</button>
-      {showAnalysis ? (
-        <FlexBox>
-          <h1>Char Counts!</h1>
-          <StyledCharContainer>
-            {emailAnalysis}
-          </StyledCharContainer>
-        </FlexBox>
-      ) : null}
+      {analysisContent}
     </FlexBox>
   )
 }

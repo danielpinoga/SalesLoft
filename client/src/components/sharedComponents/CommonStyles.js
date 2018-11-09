@@ -5,7 +5,7 @@ export const FlexBox = styled.div`
   align-items: center;
   justify-content: center;
   flex-flow: column nowrap;
-  margin-top: 30px;
+  margin: 10px;
 `
 
 export const Box = styled.div`
