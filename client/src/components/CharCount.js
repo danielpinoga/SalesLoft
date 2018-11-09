@@ -1,4 +1,25 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const CharCountPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const StyledCharContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 20vh;
+  width: 60vw;
+  border: 2px black solid;
+`
+
+const StyledChar = styled.div`
+  margin: 2px 10px;
+`
 
 const CharCount = (props) => {
 
@@ -8,17 +29,19 @@ const CharCount = (props) => {
 
   const charCountContent = allCharsSorted.map(char => {
     return (
-      <div key={char}>
+      <StyledChar key={char}>
         {char}: {props.charCount[char]}
-      </div>
+      </StyledChar>
     )
   })
 
   return (
-    <div>
+    <CharCountPageWrapper>
       <h1>Char Counts!</h1>
-      {charCountContent}
-    </div>
+      <StyledCharContainer>
+        {charCountContent}
+      </StyledCharContainer>
+    </CharCountPageWrapper>
   )
 }
 
