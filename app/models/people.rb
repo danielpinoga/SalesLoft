@@ -4,7 +4,7 @@ class People < ApplicationRecord
     url = ENV['SALESLOFT_BASE_URL'] + '/v2/people.json'
     headers = { 'Authorization' => "Bearer #{ENV['SALESLOFT_API_KEY']}" }
     query_params = {
-      'per_page' => 100,
+      'per_page' => 25,
       'include_paging_counts' => true,
       'page' => page
     }
@@ -17,7 +17,6 @@ class People < ApplicationRecord
     url = ENV['SALESLOFT_BASE_URL'] + '/v2/people.json'
     headers = { 'Authorization' => "Bearer #{ENV['SALESLOFT_API_KEY']}" }
     query_params = {
-      'per_page' => 100,
       'include_paging_counts' => true,
       'ids' => id
     }

@@ -4,18 +4,25 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+const PeoplePageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const StyledPerson = styled(Link)`
   border: solid 2px black;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 350px;
   text-decoration: none;
+  margin: 10px;
+  padding: 15px;
 `
 const StyledPeopleContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: left;
-  padding: 2px 16px;
-
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
 `
 
 
@@ -24,13 +31,15 @@ class PeoplePage extends Component {
     super(props);
 
     this.state = {
-      people: []
+      people: [],
+      page: 0
     }
   }
 
   componentDidMount() {
     axios.get('/api/people')
       .then(response => {
+        console.log(response.data)
         this.setState({ people: response.data })
       })
   }
@@ -42,15 +51,22 @@ class PeoplePage extends Component {
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
           <div>Email: {person.email_address}</div>
+          <div>Job Title: {person.title}</div>
         </StyledPerson>
       )
     })
 
     return (
-      <StyledPeopleContainer>
-        People PAge
-        {peopleContent}
-      </StyledPeopleContainer>
+      <PeoplePageWrapper>
+        <h1>People Page</h1>
+        {this.state.page > -1 ? 'Go Back To Last Page' : null} |
+        Current Page: {this.state.page + 1} |
+        Go To Next Page
+
+        <StyledPeopleContainer>
+          {peopleContent}
+        </StyledPeopleContainer>
+      </PeoplePageWrapper>
     )
   }
 }
