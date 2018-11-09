@@ -1,7 +1,9 @@
 {
   "name": "SalesLoftInterviewKit",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "webpack:deploy": "webpack --config=webpack.config.js -p",
+    "heroku-postbuild": "npm run webpack:deploy"
   },
   "private": true,
   "dependencies": {
