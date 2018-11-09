@@ -38,8 +38,6 @@ class PeoplePage extends Component {
     this.props.fetchPeople(this.state.page)
   }
 
-  // goBack = () => this.setState({ page: this.state.page - 1 })
-
   render() {
     const goNext = () => {
       const nextPage = this.state.page + 1
@@ -88,7 +86,7 @@ class PeoplePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people
+    people: state.people.current
   }
 }
 

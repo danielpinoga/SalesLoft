@@ -51,6 +51,7 @@ const EmailAnalysis = (props) => {
     (
       <FlexBox>
         <h1>Char Counts!</h1>
+        <button onClick={analyzeEmails}>Update Analysis for this page</button>
         <StyledCharContainer>
           {emailAnalysis}
         </StyledCharContainer>
@@ -68,7 +69,7 @@ const EmailAnalysis = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people,
+    people: state.people.current,
     emailAnalysis: state.emailAnalysis
   }
 }
