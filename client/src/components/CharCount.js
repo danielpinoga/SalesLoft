@@ -2,7 +2,11 @@ import React from 'react'
 
 const CharCount = (props) => {
 
-  const charCountContent = props.allChars.map(char => {
+  const allCharsSorted = props.allChars.sort((charA, charB) => {
+    return props.charCount[charB] - props.charCount[charA]
+  })
+
+  const charCountContent = allCharsSorted.map(char => {
     return (
       <div key={char}>
         {char}: {props.charCount[char]}
