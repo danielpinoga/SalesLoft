@@ -24,7 +24,8 @@ const EmailAnalysis = (props) => {
 
   const analyzeEmails = () => {
     const peopleArray = props.analyzeAll ? props.people.all : props.people.current
-    const allEmailChars = peopleArray.reduce((charTracker, person) => {
+    const allEmailChars = Object.keys(peopleArray).reduce((charTracker, id) => {
+      const person = peopleArray[id]
       return person.email_address.split('').reduce((charTracker, char) => {
         if (char.match(/[a-z]/i)) {
           charTracker[char] ? charTracker[char] += 1 : charTracker[char] = 1
