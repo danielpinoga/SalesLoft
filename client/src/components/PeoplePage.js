@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import CharCount from './CharCount';
+import EmailAnalysis from './EmailAnalysis'
+import { fetchPeople } from '../actions/AsyncActions'
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const PeoplePageWrapper = styled.div`
   align-items: center;
 `
 
-const StyledPerson = styled(Link)`
+const StyledPerson = styled.div`
   border: solid 2px black;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 350px;
@@ -31,35 +31,16 @@ class PeoplePage extends Component {
     super(props);
 
     this.state = {
-      people: [],
-      page: 0,
-      showCharCount: false,
-      charCount: {}
+      page: 0
     }
   }
 
   async componentDidMount() {
-    const response = await axios.get('/api/people')
-    console.log(response.data)
-    this.setState({ people: response.data })
+    this.props.fetchPeople()
   }
 
   render() {
-    const countCharacters = () => {
-      const charCount = this.state.people.reduce((charObject, person) => {
-        return person.email_address.split('').reduce((charObject, char) => {
-          if (char.match(/[a-z]/i)) {
-            charObject[char] ? charObject[char] += 1 : charObject[char] = 1
-          }
-          return charObject
-        }, charObject)
-      }, {})
-
-      this.setState({ charCount, showCharCount: true })
-    }
-
-
-    const peopleContent = this.state.people.map(person => {
+    let peopleContent = this.props.people.map(person => {
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
@@ -68,11 +49,6 @@ class PeoplePage extends Component {
         </StyledPerson>
       )
     })
-
-    const charCountComponent = (
-      <CharCount charCount={this.state.charCount} />
-    )
-
 
     return (
       <PeoplePageWrapper>
@@ -83,8 +59,7 @@ class PeoplePage extends Component {
           Go To Next Page
         </div>
 
-        <button onClick={countCharacters}>Update Char Count</button>
-        {this.state.showCharCount ? charCountComponent : null}
+        <EmailAnalysis />
 
         <StyledPeopleContainer>
           {peopleContent}
@@ -94,5 +69,14 @@ class PeoplePage extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    people: state.people
+  }
+}
 
-export default connect(null)(PeoplePage)
+const mapDispatchToProps = {
+  fetchPeople
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage)

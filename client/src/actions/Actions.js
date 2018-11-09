@@ -6,3 +6,18 @@ export function receiveMe(me) {
     me
   }
 }
+
+export function receivePeople(people) {
+  return {
+    type: actions.RECEIVE_PEOPLE,
+    people
+  }
+}
+
+export function updateEmailChars(emailChars, showAnalysis) {
+  return {
+    type: actions.UPDATE_EMAIL_CHARS,
+    emailChars,
+    showAnalysis
+  }
+}
