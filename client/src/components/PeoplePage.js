@@ -49,7 +49,9 @@ class PeoplePage extends Component {
     const countCharacters = () => {
       const charCount = this.state.people.reduce((charObject, person) => {
         return person.email_address.split('').reduce((charObject, char) => {
-          charObject[char] ? charObject[char] += 1 : charObject[char] = 1
+          if (char.match(/[a-z]/i)) {
+            charObject[char] ? charObject[char] += 1 : charObject[char] = 1
+          }
           return charObject
         }, charObject)
       }, {})
