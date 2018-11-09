@@ -22,7 +22,16 @@ export function receivePeopleFailure(err) {
   }
 }
 
-export function updateEmailChars(results) {
+export function updateEmailChars(peopleArray) {
+  const results = Object.keys(peopleArray).reduce((charTracker, id) => {
+    return peopleArray[id].email_address.split('').reduce((charTracker, char) => {
+      if (char.match(/[a-z]/i)) {
+        charTracker[char] ? charTracker[char] += 1 : charTracker[char] = 1
+      }
+      return charTracker
+    }, charTracker)
+  }, {})
+
   return {
     type: actions.UPDATE_EMAIL_CHARS,
     results
