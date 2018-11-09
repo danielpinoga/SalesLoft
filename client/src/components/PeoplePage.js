@@ -94,5 +94,10 @@ class PeoplePage extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    people: state.people
+  }
+}
 
-export default connect(null)(PeoplePage)
+export default connect(mapStateToProps)(PeoplePage)

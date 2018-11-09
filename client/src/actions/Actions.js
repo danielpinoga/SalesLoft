@@ -6,3 +6,10 @@ export function receiveMe(me) {
     me
   }
 }
+
+export function receivePeople(people) {
+  return {
+    type: actions.RECEIVE_PEOPLE,
+    people
+  }
+}
