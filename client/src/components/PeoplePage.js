@@ -30,15 +30,23 @@ class PeoplePage extends Component {
     super(props);
 
     this.state = {
-      page: 0
+      page: 1
     }
   }
 
   async componentDidMount() {
-    this.props.fetchPeople()
+    this.props.fetchPeople(this.state.page)
   }
 
+  // goBack = () => this.setState({ page: this.state.page - 1 })
+
   render() {
+    const goNext = () => {
+      const nextPage = this.state.page + 1
+      this.props.fetchPeople(nextPage)
+      this.setState({ page: nextPage })
+    }
+
     let peopleContent = this.props.people.map(person => {
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
@@ -53,9 +61,9 @@ class PeoplePage extends Component {
       <PeoplePageWrapper>
         <h1>People Page</h1>
         <div>
-          {this.state.page > 0 ? 'Go Back To Last Page | ' : null}
-          Current Page: {this.state.page + 1} |
-          Go To Next Page
+          {this.state.page > 1 ? 'Go Back a Page | ' : null}
+          Current Page: {this.state.page} |
+          <span onClick={goNext}> Next Page</span>
         </div>
 
         <EmailAnalysis />
