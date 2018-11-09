@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import CharCount from './CharCount';
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -69,17 +70,10 @@ class PeoplePage extends Component {
       )
     })
 
-    const charCountContent = !this.state.showCharCount ? null : (
-      <div>
-        <h1>Char Counts!</h1>
-        {this.state.allChars.map(char => {
-          return (
-            <div>
-              {char}: {this.state.charCount[char]}
-            </div>
-          )
-        })}
-      </div>
+    const charCountComponent = (
+      <CharCount
+        charCount={this.state.charCount}
+        allChars={this.state.allChars} />
     )
 
 
@@ -93,7 +87,7 @@ class PeoplePage extends Component {
         </div>
 
         <button onClick={countCharacters}>Update Char Count</button>
-        {charCountContent}
+        {this.state.showCharCount ? charCountComponent : null}
 
         <StyledPeopleContainer>
           {peopleContent}
