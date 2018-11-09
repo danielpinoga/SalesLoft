@@ -1,23 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class CharCount extends Component {
-  render() {
+const CharCount = (props) => {
 
-    const allChars = this.props.allChars
-
-    const charCountContent = allChars.map(char => {
-      return (
-        <div key={char}>
-          {char}: {this.props.charCount[char]}
-        </div>
-      )
-    })
-
+  const charCountContent = props.allChars.map(char => {
     return (
-      <div>
-        <h1>Char Counts!</h1>
-        {charCountContent}
+      <div key={char}>
+        {char}: {props.charCount[char]}
       </div>
     )
-  }
+  })
+
+  return (
+    <div>
+      <h1>Char Counts!</h1>
+      {charCountContent}
+    </div>
+  )
 }
+
+export default CharCount
