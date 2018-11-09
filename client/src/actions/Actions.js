@@ -7,10 +7,17 @@ export function receiveMe(me) {
   }
 }
 
-export function receivePeople(people) {
+export function receivePeopleSuccess(people) {
   return {
-    type: actions.RECEIVE_PEOPLE,
+    type: actions.RECEIVE_PEOPLE_SUCCESS,
     people
+  }
+}
+
+export function receivePeopleFailure(err) {
+  return {
+    type: actions.RECEIVE_PEOPLE_FAILURE,
+    err
   }
 }
 
