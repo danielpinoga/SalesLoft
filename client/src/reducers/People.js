@@ -22,6 +22,7 @@ export function people(
       return newState
     case RECEIVE_PEOPLE_FAILURE:
       console.error('Failure to get people from API.')
+      return state
     default:
       return state
   }

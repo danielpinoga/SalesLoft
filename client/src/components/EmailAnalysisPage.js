@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlexBox, Box, StyledChar, StyledCharContainer } from './sharedComponents/CommonStyles'
+import { FlexBox, StyledChar, StyledCharContainer } from './sharedComponents/CommonStyles'
 import { connect } from 'react-redux'
 import { updateEmailChars, toggleAnalyzeAll } from '../actions/Actions'
 
