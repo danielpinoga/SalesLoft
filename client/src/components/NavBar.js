@@ -36,6 +36,11 @@ const Badge = styled.div`
   background-color: #4a90e2;
 `;
 
+
+const DanielBadge = styled(Badge)`
+  background-color: red;
+`
+
 let SignInBadge = () => (
   <Badge>
     <a href='/users/auth/salesloft' style={{ textDecoration: 'none' }}><NavText>Login</NavText></a>
@@ -50,11 +55,11 @@ let UserBadge = ({ user }) => (
 
 let NavBar = ({ user }) => (
   <StyledNavBar>
-    <Badge>
+    <DanielBadge>
       <Link to='/people' style={{ textDecoration: 'none' }}>
-        <NavText>Solution Code</NavText>
+        <NavText>View Daniel's Solution Page</NavText>
       </Link>
-    </Badge>
+    </DanielBadge>
     {user ? <UserBadge user={user} /> : <SignInBadge />}
   </StyledNavBar>
 );
