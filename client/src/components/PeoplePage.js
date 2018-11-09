@@ -32,20 +32,32 @@ class PeoplePage extends Component {
 
     this.state = {
       people: [],
-      page: 0
+      page: 0,
+      showCharCount: false,
+      charCount: {}
     }
   }
 
-  componentDidMount() {
-    axios.get('/api/people')
-      .then(response => {
-        console.log(response.data)
-        this.setState({ people: response.data })
-      })
+  async componentDidMount() {
+    const response = await axios.get('/api/people')
+    console.log(response.data)
+    this.setState({ people: response.data })
   }
 
+  countCharacters() {
+    const count = this.state.people.reduce((charObject, person) => {
+      console.log(person.email_address)
+    }, {})
+
+    console.log('final count', count)
+  }
 
   render() {
+    const countCharacters = () => {
+
+    }
+
+
     const peopleContent = this.state.people.map(person => {
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
@@ -59,9 +71,14 @@ class PeoplePage extends Component {
     return (
       <PeoplePageWrapper>
         <h1>People Page</h1>
-        {this.state.page > -1 ? 'Go Back To Last Page' : null} |
-        Current Page: {this.state.page + 1} |
-        Go To Next Page
+        <div>
+          {this.state.page > 0 ? 'Go Back To Last Page | ' : null}
+          Current Page: {this.state.page + 1} |
+          Go To Next Page
+        </div>
+
+        <div>Char Count: {this.state.charCount.a}</div>
+        <button onClick={this.countCharacters}>Update Char Count</button>
 
         <StyledPeopleContainer>
           {peopleContent}
