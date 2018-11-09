@@ -47,6 +47,12 @@ class PeoplePage extends Component {
       this.setState({ page: nextPage })
     }
 
+    const goBack = () => {
+      const lastPage = this.state.page - 1
+      this.props.fetchPeople(lastPage)
+      this.setState({ page: lastPage })
+    }
+
     let peopleContent = this.props.people.map(person => {
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
@@ -57,11 +63,15 @@ class PeoplePage extends Component {
       )
     })
 
+    const backButton = this.state.page > 1 ?
+      <span onClick={goBack}>Back One Page | </span> :
+      null
+
     return (
       <PeoplePageWrapper>
         <h1>People Page</h1>
         <div>
-          {this.state.page > 1 ? 'Go Back a Page | ' : null}
+          {backButton}
           Current Page: {this.state.page} |
           <span onClick={goNext}> Next Page</span>
         </div>
