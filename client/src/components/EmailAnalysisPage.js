@@ -9,7 +9,7 @@ const EmailAnalysisPage = (props) => {
 
   const showAnalysis = Object.keys(props.emailAnalysis).length > 0
   const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('')
-  const sortedLetters = allLetters.sort((a, b) => (props.emailAnalysis[a] || 0) - (props.emailAnalysis[b] || 0))
+  const sortedLetters = allLetters.sort((a, b) => (props.emailAnalysis[b] || 0) - (props.emailAnalysis[a] || 0))
 
   const emailAnalysisContent = sortedLetters.map(char => (
     <StyledChar key={char}>
