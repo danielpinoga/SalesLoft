@@ -35,8 +35,6 @@ const EmailAnalysis = (props) => {
     props.updateEmailChars(emailChars, true)
   }
 
-  console.log('chars', props.emailChars)
-
   let emailAnalysis = ''
 
   if (props.showAnalysis) {
@@ -44,7 +42,6 @@ const EmailAnalysis = (props) => {
       return (props.emailChars[charB] || 0) - (props.emailChars[charA] || 0)
     })
 
-    console.log('done sorting')
     emailAnalysis = allCharsSorted.map(char => {
       return (
         <StyledChar key={char}>
