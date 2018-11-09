@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import CharCount from './CharCount';
+import CharCount from './CharCount'
+import { fetchPeople } from '../actions/AsyncActions'
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -31,7 +32,6 @@ class PeoplePage extends Component {
     super(props);
 
     this.state = {
-      people: [],
       page: 0,
       showCharCount: false,
       charCount: {}
@@ -39,14 +39,12 @@ class PeoplePage extends Component {
   }
 
   async componentDidMount() {
-    const response = await axios.get('/api/people')
-    console.log(response.data)
-    this.setState({ people: response.data })
+    this.props.fetchPeople()
   }
 
   render() {
     const countCharacters = () => {
-      const charCount = this.state.people.reduce((charObject, person) => {
+      const charCount = this.props.people.reduce((charObject, person) => {
         return person.email_address.split('').reduce((charObject, char) => {
           if (char.match(/[a-z]/i)) {
             charObject[char] ? charObject[char] += 1 : charObject[char] = 1
@@ -59,7 +57,7 @@ class PeoplePage extends Component {
     }
 
 
-    const peopleContent = this.state.people.map(person => {
+    let peopleContent = this.props.people.map(person => {
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
@@ -72,7 +70,6 @@ class PeoplePage extends Component {
     const charCountComponent = (
       <CharCount charCount={this.state.charCount} />
     )
-
 
     return (
       <PeoplePageWrapper>
@@ -100,4 +97,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(PeoplePage)
+export default connect(mapStateToProps, { fetchPeople })(PeoplePage)

@@ -1,13 +1,12 @@
-import { merge } from '../utils'
 import { RECEIVE_PEOPLE } from '../actions/Constants'
 
 export function people(
-  state = {},
+  state = [],
   action
 ) {
   switch (action.type) {
     case RECEIVE_PEOPLE:
-      return merge(state, action.people)
+      return [...action.people]
     default:
       return state
   }
