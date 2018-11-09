@@ -34,8 +34,7 @@ class PeoplePage extends Component {
       people: [],
       page: 0,
       showCharCount: false,
-      charCount: {},
-      allChars: []
+      charCount: {}
     }
   }
 
@@ -56,9 +55,7 @@ class PeoplePage extends Component {
         }, charObject)
       }, {})
 
-      const allChars = Object.keys(charCount)
-
-      this.setState({ charCount, showCharCount: true, allChars })
+      this.setState({ charCount, showCharCount: true })
     }
 
 
@@ -73,9 +70,7 @@ class PeoplePage extends Component {
     })
 
     const charCountComponent = (
-      <CharCount
-        charCount={this.state.charCount}
-        allChars={this.state.allChars} />
+      <CharCount charCount={this.state.charCount} />
     )
 
 

@@ -22,15 +22,16 @@ const StyledChar = styled.div`
 `
 
 const CharCount = (props) => {
+  const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-  const allCharsSorted = props.allChars.sort((charA, charB) => {
-    return props.charCount[charB] - props.charCount[charA]
+  const allCharsSorted = allChars.toLowerCase().split('').sort((charA, charB) => {
+    return (props.charCount[charB] || 0) - (props.charCount[charA] || 0)
   })
 
   const charCountContent = allCharsSorted.map(char => {
     return (
       <StyledChar key={char}>
-        {char}: {props.charCount[char]}
+        {char}: {props.charCount[char] || 0}
       </StyledChar>
     )
   })
