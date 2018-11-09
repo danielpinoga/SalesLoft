@@ -1,2 +1,3 @@
 export const RECEIVE_ME = 'RECEIVE_ME'
 export const RECEIVE_PEOPLE = 'RECEIVE_PEOPLE'
+export const UPDATE_EMAIL_CHARS = 'UPDATE_EMAIL_CHARS'

@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import CharCount from './CharCount'
 import { fetchPeople } from '../actions/AsyncActions'
+import { updateEmailChars } from '../actions/Actions'
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -32,9 +33,7 @@ class PeoplePage extends Component {
     super(props);
 
     this.state = {
-      page: 0,
-      showCharCount: false,
-      charCount: {}
+      page: 0
     }
   }
 
@@ -44,7 +43,7 @@ class PeoplePage extends Component {
 
   render() {
     const countCharacters = () => {
-      const charCount = this.props.people.reduce((charObject, person) => {
+      const emailChars = this.props.people.reduce((charObject, person) => {
         return person.email_address.split('').reduce((charObject, char) => {
           if (char.match(/[a-z]/i)) {
             charObject[char] ? charObject[char] += 1 : charObject[char] = 1
@@ -53,7 +52,7 @@ class PeoplePage extends Component {
         }, charObject)
       }, {})
 
-      this.setState({ charCount, showCharCount: true })
+      this.props.updateEmailChars(emailChars, true)
     }
 
 
@@ -68,7 +67,7 @@ class PeoplePage extends Component {
     })
 
     const charCountComponent = (
-      <CharCount charCount={this.state.charCount} />
+      <CharCount charCount={this.props.charCount} />
     )
 
     return (
@@ -81,7 +80,6 @@ class PeoplePage extends Component {
         </div>
 
         <button onClick={countCharacters}>Update Char Count</button>
-        {this.state.showCharCount ? charCountComponent : null}
 
         <StyledPeopleContainer>
           {peopleContent}
@@ -93,8 +91,15 @@ class PeoplePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people
+    people: state.people,
+    charCount: state.charCount,
+    showCharCount: state.showCharCount
   }
 }
 
-export default connect(mapStateToProps, { fetchPeople })(PeoplePage)
+const mapDispatchToProps = {
+  fetchPeople,
+  updateEmailChars
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage)
