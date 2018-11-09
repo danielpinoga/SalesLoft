@@ -25,7 +25,6 @@ const StyledPeopleContainer = styled.div`
   padding: 20px;
 `
 
-
 class PeoplePage extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +33,8 @@ class PeoplePage extends Component {
       people: [],
       page: 0,
       showCharCount: false,
-      charCount: {}
+      charCount: {},
+      allChars: []
     }
   }
 
@@ -44,17 +44,18 @@ class PeoplePage extends Component {
     this.setState({ people: response.data })
   }
 
-  countCharacters() {
-    const count = this.state.people.reduce((charObject, person) => {
-      console.log(person.email_address)
-    }, {})
-
-    console.log('final count', count)
-  }
-
   render() {
     const countCharacters = () => {
+      const charCount = this.state.people.reduce((charObject, person) => {
+        return person.email_address.split('').reduce((charObject, char) => {
+          charObject[char] ? charObject[char] += 1 : charObject[char] = 1
+          return charObject
+        }, charObject)
+      }, {})
 
+      const allChars = Object.keys(charCount)
+
+      this.setState({ charCount, showCharCount: true, allChars })
     }
 
 
@@ -68,6 +69,20 @@ class PeoplePage extends Component {
       )
     })
 
+    const charCountContent = !this.state.showCharCount ? null : (
+      <div>
+        <h1>Char Counts!</h1>
+        {this.state.allChars.map(char => {
+          return (
+            <div>
+              {char}: {this.state.charCount[char]}
+            </div>
+          )
+        })}
+      </div>
+    )
+
+
     return (
       <PeoplePageWrapper>
         <h1>People Page</h1>
@@ -77,8 +92,8 @@ class PeoplePage extends Component {
           Go To Next Page
         </div>
 
-        <div>Char Count: {this.state.charCount.a}</div>
-        <button onClick={this.countCharacters}>Update Char Count</button>
+        <button onClick={countCharacters}>Update Char Count</button>
+        {charCountContent}
 
         <StyledPeopleContainer>
           {peopleContent}
