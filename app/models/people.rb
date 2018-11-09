@@ -1,10 +1,10 @@
 class People < ApplicationRecord
 
-  def self.all page = 0
+  def self.all page = 0, per_page = 25
     url = ENV['SALESLOFT_BASE_URL'] + '/v2/people.json'
     headers = { 'Authorization' => "Bearer #{ENV['SALESLOFT_API_KEY']}" }
     query_params = {
-      'per_page' => 25,
+      'per_page' => per_page,
       'include_paging_counts' => true,
       'page' => page
     }

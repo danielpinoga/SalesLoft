@@ -1,7 +1,7 @@
 class Api::PeopleController < ApplicationController
 
   def index
-    @people = People.all
+    @people = People.all params[:page], params[:per_page]
     render json: @people
   end
 
