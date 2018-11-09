@@ -36,8 +36,7 @@ const Badge = styled.div`
   background-color: #4a90e2;
 `;
 
-
-const DanielBadge = styled(Badge)`
+const StyledDanielBadge = styled(Badge)`
   background-color: red;
 `
 
@@ -53,13 +52,17 @@ let UserBadge = ({ user }) => (
   </Badge>
 );
 
+const DanielBadge = () => (
+  <StyledDanielBadge>
+    <Link to='/people' style={{ textDecoration: 'none' }}>
+      <NavText>View Daniel's Solution Page</NavText>
+    </Link>
+  </StyledDanielBadge>
+)
+
 let NavBar = ({ user }) => (
   <StyledNavBar>
-    <DanielBadge>
-      <Link to='/people' style={{ textDecoration: 'none' }}>
-        <NavText>View Daniel's Solution Page</NavText>
-      </Link>
-    </DanielBadge>
+    <DanielBadge />
     {user ? <UserBadge user={user} /> : <SignInBadge />}
   </StyledNavBar>
 );
