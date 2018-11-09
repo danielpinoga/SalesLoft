@@ -11,8 +11,9 @@ export function people(
   switch (action.type) {
     case RECEIVE_PEOPLE_SUCCESS:
       const newState = { ...state }
-      // newState.all.push(...action.people)
+      newState.all.push(...action.people)
       newState.current = [...action.people]
+      newState.page = action.page
       return newState
     case RECEIVE_PEOPLE_FAILURE:
       console.error('Failure to get people from API.')

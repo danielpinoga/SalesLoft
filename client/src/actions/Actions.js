@@ -7,10 +7,11 @@ export function receiveMe(me) {
   }
 }
 
-export function receivePeopleSuccess(people) {
+export function receivePeopleSuccess(people, page) {
   return {
     type: actions.RECEIVE_PEOPLE_SUCCESS,
-    people
+    people,
+    page
   }
 }
 
@@ -21,9 +22,15 @@ export function receivePeopleFailure(err) {
   }
 }
 
-export function updateEmailChars(emailChars) {
+export function updateEmailChars(results) {
   return {
     type: actions.UPDATE_EMAIL_CHARS,
-    emailChars
+    results
+  }
+}
+
+export function toggleAnalyzeAll() {
+  return {
+    type: actions.TOOGLE_ANALYZE_ALL
   }
 }

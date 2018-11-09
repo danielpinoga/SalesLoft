@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FlexBox, Box } from './sharedComponents/CommonStyles'
 import { connect } from 'react-redux'
-import { updateEmailChars } from '../actions/Actions'
+import { updateEmailChars, toggleAnalyzeAll } from '../actions/Actions'
 
 const StyledCharContainer = styled.div`
   display: flex;
@@ -23,7 +23,8 @@ const EmailAnalysis = (props) => {
   const showAnalysis = Object.keys(props.emailAnalysis).length > 0
 
   const analyzeEmails = () => {
-    const allEmailChars = props.people.reduce((charTracker, person) => {
+    const peopleArray = props.analyzeAll ? props.people.all : props.people.current
+    const allEmailChars = peopleArray.reduce((charTracker, person) => {
       return person.email_address.split('').reduce((charTracker, char) => {
         if (char.match(/[a-z]/i)) {
           charTracker[char] ? charTracker[char] += 1 : charTracker[char] = 1
@@ -33,6 +34,11 @@ const EmailAnalysis = (props) => {
     }, {})
 
     props.updateEmailChars(allEmailChars, true)
+  }
+
+  const toggleAnalysis = () => {
+    props.toggleAnalyzeAll()
+    analyzeEmails()
   }
 
   const allCharsSorted = letters.toLowerCase().split('').sort((charA, charB) => {
@@ -50,8 +56,9 @@ const EmailAnalysis = (props) => {
   const analysisContent = showAnalysis ?
     (
       <FlexBox>
-        <h1>Char Counts!</h1>
+        <h1>Char Counts</h1>
         <button onClick={analyzeEmails}>Update Analysis for this page</button>
+        <button onClick={toggleAnalysis}>Toggle Analysis between ALL and CURRENT PAGE</button>
         <StyledCharContainer>
           {emailAnalysis}
         </StyledCharContainer>
@@ -69,12 +76,15 @@ const EmailAnalysis = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people.current,
-    emailAnalysis: state.emailAnalysis
+    people: state.people,
+    emailAnalysis: state.emailAnalysis.results,
+    analyzeAll: state.emailAnalysis.analyzeAll,
+    page: state.people.page
   }
 }
 
 const mapDispatchToProps = {
-  updateEmailChars
+  updateEmailChars,
+  toggleAnalyzeAll
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EmailAnalysis)
