@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import CharCount from './CharCount'
+import EmailAnalysis from './EmailAnalysis'
 import { fetchPeople } from '../actions/AsyncActions'
-import { updateEmailChars } from '../actions/Actions'
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -60,7 +59,8 @@ class PeoplePage extends Component {
           Go To Next Page
         </div>
 
-        <CharCount />
+        <EmailAnalysis />
+
         <StyledPeopleContainer>
           {peopleContent}
         </StyledPeopleContainer>
@@ -71,15 +71,12 @@ class PeoplePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people,
-    charCount: state.charCount,
-    showCharCount: state.showCharCount
+    people: state.people
   }
 }
 
 const mapDispatchToProps = {
-  fetchPeople,
-  updateEmailChars
+  fetchPeople
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage)

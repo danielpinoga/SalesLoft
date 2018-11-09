@@ -18,7 +18,7 @@ const StyledChar = styled.div`
   margin: 2px 10px;
 `
 
-const CharCount = (props) => {
+const EmailAnalysis = (props) => {
   const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
@@ -39,7 +39,7 @@ const CharCount = (props) => {
 
   let emailAnalysis = ''
 
-  if (props.showChars) {
+  if (props.showAnalysis) {
     const allCharsSorted = allChars.toLowerCase().split('').sort((charA, charB) => {
       return (props.emailChars[charB] || 0) - (props.emailChars[charA] || 0)
     })
@@ -58,7 +58,7 @@ const CharCount = (props) => {
   return (
     <FlexBox>
       <button onClick={countCharacters}>Count</button>
-      {props.showChars ? (
+      {props.showAnalysis ? (
         <FlexBox>
           <h1>Char Counts!</h1>
           <StyledCharContainer>
@@ -74,11 +74,11 @@ const mapStateToProps = (state) => {
   return {
     people: state.people,
     emailChars: state.emailAnalysis.chars,
-    showChars: state.emailAnalysis.showChars
+    showAnalysis: state.emailAnalysis.showAnalysis
   }
 }
 
 const mapDispatchToProps = {
   updateEmailChars
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CharCount)
+export default connect(mapStateToProps, mapDispatchToProps)(EmailAnalysis)

@@ -14,10 +14,10 @@ export function receivePeople(people) {
   }
 }
 
-export function updateEmailChars(emailChars, showChars) {
+export function updateEmailChars(emailChars, showAnalysis) {
   return {
     type: actions.UPDATE_EMAIL_CHARS,
     emailChars,
-    showChars
+    showAnalysis
   }
 }

@@ -13,7 +13,7 @@ export function emailAnalysis(
     case UPDATE_EMAIL_CHARS:
       const updates = {
         chars: action.emailChars,
-        showChars: action.showChars
+        showAnalysis: action.showAnalysis
       }
       return merge(state, updates)
     default:
