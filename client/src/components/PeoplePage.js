@@ -11,7 +11,7 @@ const PeoplePageWrapper = styled.div`
   align-items: center;
 `
 
-const StyledPerson = styled(Link)`
+const StyledPerson = styled.div`
   border: solid 2px black;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 350px;

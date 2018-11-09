@@ -11,7 +11,6 @@ export function fetchMe() {
 }
 
 export function fetchPeople() {
-  console.log('fetching')
   return dispatch => {
     return fetch('/api/people').
       then(response => response.json()).

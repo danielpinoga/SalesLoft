@@ -19,43 +19,38 @@ const StyledChar = styled.div`
 `
 
 const EmailAnalysis = (props) => {
-  const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const showAnalysis = Object.keys(props.emailAnalysis).length > 0
 
-
-  const countCharacters = () => {
-    const emailChars = props.people.reduce((charObject, person) => {
-      return person.email_address.split('').reduce((charObject, char) => {
+  const analyzeEmails = () => {
+    const allEmailChars = props.people.reduce((charTracker, person) => {
+      return person.email_address.split('').reduce((charTracker, char) => {
         if (char.match(/[a-z]/i)) {
-          charObject[char] ? charObject[char] += 1 : charObject[char] = 1
+          charTracker[char] ? charTracker[char] += 1 : charTracker[char] = 1
         }
-        return charObject
-      }, charObject)
+        return charTracker
+      }, charTracker)
     }, {})
 
-    props.updateEmailChars(emailChars, true)
+    props.updateEmailChars(allEmailChars, true)
   }
 
-  let emailAnalysis = ''
+  const allCharsSorted = letters.toLowerCase().split('').sort((charA, charB) => {
+    return (props.emailAnalysis[charB] || 0) - (props.emailAnalysis[charA] || 0)
+  })
 
-  if (props.showAnalysis) {
-    const allCharsSorted = allChars.toLowerCase().split('').sort((charA, charB) => {
-      return (props.emailChars[charB] || 0) - (props.emailChars[charA] || 0)
-    })
-
-    emailAnalysis = allCharsSorted.map(char => {
-      return (
-        <StyledChar key={char}>
-          {char}: {props.emailChars[char] || 0}
-        </StyledChar>
-      )
-    })
-  }
-
+  const emailAnalysis = allCharsSorted.map(char => {
+    return (
+      <StyledChar key={char}>
+        {char}: {props.emailAnalysis[char] || 0}
+      </StyledChar>
+    )
+  })
 
   return (
     <FlexBox>
-      <button onClick={countCharacters}>Count</button>
-      {props.showAnalysis ? (
+      <button onClick={analyzeEmails}>Display Email Analysis</button>
+      {showAnalysis ? (
         <FlexBox>
           <h1>Char Counts!</h1>
           <StyledCharContainer>
@@ -70,8 +65,7 @@ const EmailAnalysis = (props) => {
 const mapStateToProps = (state) => {
   return {
     people: state.people,
-    emailChars: state.emailAnalysis.chars,
-    showAnalysis: state.emailAnalysis.showAnalysis
+    emailAnalysis: state.emailAnalysis
   }
 }
 
