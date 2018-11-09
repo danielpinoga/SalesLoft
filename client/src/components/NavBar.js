@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const NAV_HEIGHT = 46;
-const AVATAR_HEIGHT = 40;
-const AVATAR_WIDTH = 40;
 
 const StyledNavBar = styled.nav`
   display: flex;
@@ -11,7 +10,7 @@ const StyledNavBar = styled.nav`
   align-content: center;
 
   margin: 0px;
-  padding 0px;
+  padding: 0px;
   height: ${NAV_HEIGHT}px;
   width: 100%;
 `;
@@ -30,7 +29,7 @@ const Badge = styled.div`
   align-items: center;
   overflow: hidden;
   border-radius: 7px;
-  border 2px solid #4a90e2;
+  border: 2px solid #4a90e2;
   justify-content: center;
   font-size: 25px;
   font-weight: bold;
@@ -39,18 +38,23 @@ const Badge = styled.div`
 
 let SignInBadge = () => (
   <Badge>
-    <a href='/users/auth/salesloft' style={{textDecoration: 'none'}}><NavText>Login</NavText></a>
+    <a href='/users/auth/salesloft' style={{ textDecoration: 'none' }}><NavText>Login</NavText></a>
   </Badge>
 );
 
-let UserBadge = ({user}) => (
+let UserBadge = ({ user }) => (
   <Badge>
-    <a href='/users/auth/logout' style={{textDecoration: 'none'}}><NavText>{user.name}</NavText></a>
+    <a href='/users/auth/logout' style={{ textDecoration: 'none' }}><NavText>{user.name}</NavText></a>
   </Badge>
 );
 
-let NavBar = ({user}) => (
+let NavBar = ({ user }) => (
   <StyledNavBar>
+    <Badge>
+      <Link to='/people' style={{ textDecoration: 'none' }}>
+        <NavText>Solution Code</NavText>
+      </Link>
+    </Badge>
     {user ? <UserBadge user={user} /> : <SignInBadge />}
   </StyledNavBar>
 );
