@@ -1,11 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
-const CharCountPageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+import { FlexBox, Box } from './sharedComponents/CommonStyles'
 
 const StyledCharContainer = styled.div`
   display: flex;
@@ -37,12 +32,12 @@ const CharCount = (props) => {
   })
 
   return (
-    <CharCountPageWrapper>
+    <FlexBox>
       <h1>Char Counts!</h1>
       <StyledCharContainer>
         {charCountContent}
       </StyledCharContainer>
-    </CharCountPageWrapper>
+    </FlexBox>
   )
 }
 
