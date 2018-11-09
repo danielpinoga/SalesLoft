@@ -18,7 +18,7 @@ const StyledChar = styled.div`
   margin: 2px 10px;
 `
 
-const EmailAnalysis = (props) => {
+const EmailAnalysisPage = (props) => {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   const showAnalysis = Object.keys(props.emailAnalysis).length > 0
 
@@ -88,4 +88,4 @@ const mapDispatchToProps = {
   updateEmailChars,
   toggleAnalyzeAll
 }
-export default connect(mapStateToProps, mapDispatchToProps)(EmailAnalysis)
+export default connect(mapStateToProps, mapDispatchToProps)(EmailAnalysisPage)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import EmailAnalysis from './EmailAnalysis'
+import EmailAnalysisPage from './EmailAnalysisPage'
 import { fetchPeople } from '../actions/AsyncActions'
 
 const PeoplePageWrapper = styled.div`
@@ -76,7 +76,7 @@ class PeoplePage extends Component {
           <span onClick={goNext}> Next Page</span>
         </div>
 
-        <EmailAnalysis />
+        <EmailAnalysisPage />
 
         <StyledPeopleContainer>
           {peopleContent}
