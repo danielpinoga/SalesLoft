@@ -6,19 +6,19 @@ import {
   UPDATE_EMAIL_SHARDS
 } from '../actions/Constants'
 
-export function peopleInfo(
-  state = {
-    allPeople: {},
-    currentPeople: {},
-    page: 1,
-    letterCount: {},
-    countLettersForAllEmails: false,
-    emailShards: {},
-    emailsAlreadySharded: {}
-  },
-  action
-) {
+const defaultState = {
+  allPeople: {},
+  currentPeople: {},
+  page: 1,
+  letterCount: {},
+  countLettersForAllEmails: false,
+  emailShards: {},
+  emailsAlreadySharded: {}
+}
+
+export function peopleInfo(state = defaultState, action) {
   let newState = {}
+
   switch (action.type) {
     case RECEIVE_PEOPLE_SUCCESS:
       newState = { ...state }
