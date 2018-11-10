@@ -1,4 +1,4 @@
-import { determineUnshardedEmails, shardMultipleEmails } from '../utils'
+import { determineUnshardedEmails, shardMultipleEmails, deepMergeShards } from '../utils'
 import {
   RECEIVE_PEOPLE_SUCCESS,
   RECEIVE_PEOPLE_FAILURE,
@@ -50,7 +50,7 @@ export function peopleInfo(state = defaultState, action) {
       const newShards = shardMultipleEmails(emailsToBeSharded)
 
       newState = { ...state }
-      newState.emailShards = newShards //NEED TO MERGE WITH EXISTING SHARDS
+      newState.emailShards = deepMergeShards(newState.emailShards, newShards)
       newState.emailsAlreadySharded = { ...newState.emailsAlreadySharded, ...emailsToBeSharded }
       return newState
     default:

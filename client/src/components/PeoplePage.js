@@ -46,6 +46,7 @@ class PeoplePage extends Component {
       const nextPage = this.state.page + 1
       this.props.fetchPeople(nextPage)
       this.setState({ page: nextPage })
+      this.props.updateEmailShards()
     }
 
     const goBack = () => {
