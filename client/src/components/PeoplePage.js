@@ -4,11 +4,13 @@ import styled from 'styled-components'
 import EmailAnalysisPage from './EmailAnalysisPage'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
+import { PeoplePageWrapper } from './sharedComponents/CommonStyles'
 
-const PeoplePageWrapper = styled.div`
+const StyledPeopleContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
 `
 
 const StyledPerson = styled.div`
@@ -19,20 +21,10 @@ const StyledPerson = styled.div`
   margin: 10px;
   padding: 15px;
 `
-const StyledPeopleContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-`
 
 class PeoplePage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      page: 1
-    }
+  state = {
+    page: 1
   }
 
   async componentDidMount() {
@@ -40,25 +32,24 @@ class PeoplePage extends Component {
     this.props.updateEmailShards()
   }
 
+  goNext = () => {
+    const nextPage = this.state.page + 1
+    this.props.fetchPeople(nextPage)
+    this.setState({ page: nextPage })
+    this.props.updateEmailShards()
+  }
+
+  goBack = () => {
+    const lastPage = this.state.page - 1
+    this.props.fetchPeople(lastPage)
+    this.setState({ page: lastPage })
+  }
+
   render() {
-    console.log(Object.keys(this.props.allPeople).length)
-    const goNext = () => {
-      const nextPage = this.state.page + 1
-      this.props.fetchPeople(nextPage)
-      this.setState({ page: nextPage })
-      this.props.updateEmailShards()
-    }
-
-    const goBack = () => {
-      const lastPage = this.state.page - 1
-      this.props.fetchPeople(lastPage)
-      this.setState({ page: lastPage })
-    }
-
-    let peopleContent = Object.keys(this.props.currentPeople).map(id => {
-      const person = this.props.currentPeople[id]
+    let peopleContent = Object.keys(this.props.currentPeople).map(key => {
+      const person = this.props.currentPeople[key]
       return (
-        <StyledPerson key={person.id} to={`/people/${person.id}`}>
+        <StyledPerson key={key} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
           <div>Email: {person.email_address}</div>
           <div>Job Title: {person.title}</div>
@@ -66,18 +57,18 @@ class PeoplePage extends Component {
       )
     })
 
-    const backButton = this.state.page > 1 ?
-      <span onClick={goBack}>Back One Page | </span> :
-      null
+    const pageNavigation = (
+      <div>
+        {this.state.page > 1 ? <span onClick={this.goBack}>Back One Page | </span> : <span >On First Page | </span>}
+        Current Page: {this.state.page} |
+        <span onClick={this.goNext}> Next Page</span>
+      </div>
+    )
 
     return (
       <PeoplePageWrapper>
         <h1>People Page</h1>
-        <div>
-          {backButton}
-          Current Page: {this.state.page} |
-          <span onClick={goNext}> Next Page</span>
-        </div>
+        {pageNavigation}
 
         <EmailAnalysisPage />
 
