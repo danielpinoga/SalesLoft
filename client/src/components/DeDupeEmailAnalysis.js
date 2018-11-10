@@ -12,6 +12,22 @@ const breakEmailIntoSubStrings = (email, subLength, subStrings = {}) => {
 const subLengthFactor = (subLength) => {
   return subLength / 2
 }
+
+
+const analyzeAllEmails = () => {
+  const maxEmailLength = Math.max(...allEmails.map(email => email.length))
+  const allEmailAnalysis = {}
+  for (let i = 0; i <= maxEmailLength; i++) {
+    const analysis = allEmails.reduce((tracker, email) => {
+      return breakEmailIntoSubStrings(email, i, tracker)
+    }, {})
+    allEmailAnalysis[i] = analysis
+  }
+  return allEmailAnalysis
+}
+
+const allEmailAnalysisFromState = analyzeAllEmails()
+
 /*
 Find all substrings within the given email and count their frequency
 Iterate through the substrings found in step 1
@@ -43,9 +59,7 @@ const checkNewEmail = (newEmail, subLength, allEmailAnalysis) => {
 const checkForDupes = (newEmail) => {
   const dupeCheckResults = {}
   for (let i = 0; i < newEmail.length; i++) {
-    const allEmailAnalysis = allEmails.reduce((tracker, email) => {
-      return breakEmailIntoSubStrings(email, i, tracker)
-    }, {})
+    const allEmailAnalysis = allEmailAnalysisFromState[i]
     const newEmailAnalysis = checkNewEmail(newEmail, i, allEmailAnalysis)
     Object.keys(newEmailAnalysis).reduce((finalAnalysis, matchedEmail) => {
       if (finalAnalysis[matchedEmail]) {
