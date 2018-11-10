@@ -5,6 +5,7 @@ import EmailAnalysisPage from './EmailAnalysisPage'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
 import { PeoplePageWrapper } from './sharedComponents/CommonStyles'
+import { shardSingleEmail } from '../utils';
 
 const StyledPeopleContainer = styled.div`
   display: flex;
@@ -24,7 +25,8 @@ const StyledPerson = styled.div`
 
 class PeoplePage extends Component {
   state = {
-    page: 1
+    page: 1,
+    checkForDupes: false
   }
 
   async componentDidMount() {
@@ -35,24 +37,34 @@ class PeoplePage extends Component {
   goNext = () => {
     const nextPage = this.state.page + 1
     this.props.fetchPeople(nextPage)
-    this.setState({ page: nextPage })
+    this.setState({ page: nextPage, checkForDupes: false })
     this.props.updateEmailShards()
   }
 
   goBack = () => {
     const lastPage = this.state.page - 1
     this.props.fetchPeople(lastPage)
-    this.setState({ page: lastPage })
+    this.setState({ page: lastPage, checkForDupes: false })
+  }
+
+  checkForDupes = () => {
+    this.setState({ checkForDupes: true })
   }
 
   render() {
     let peopleContent = Object.keys(this.props.currentPeople).map(key => {
       const person = this.props.currentPeople[key]
+      let emailShard = ''
+      if (this.state.checkForDupes) {
+        emailShard = shardSingleEmail(person.email_address)
+      }
+      console.log(emailShard)
       return (
         <StyledPerson key={key} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
           <div>Email: {person.email_address}</div>
           <div>Job Title: {person.title}</div>
+          {this.state.checkForDupes ? <div>CHECKED</div> : null}
         </StyledPerson>
       )
     })
@@ -72,6 +84,7 @@ class PeoplePage extends Component {
 
         <EmailAnalysisPage />
 
+        <button onClick={this.checkForDupes}>Check For Dupes</button>
         <StyledPeopleContainer>
           {peopleContent}
         </StyledPeopleContainer>

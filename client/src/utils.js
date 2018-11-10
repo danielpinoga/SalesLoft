@@ -9,6 +9,14 @@ export const createEmailShards = (email, shardLength, shards = {}) => {
   return shards
 }
 
+export const shardSingleEmail = (email) => {
+  const allShards = {}
+  for (let shardLength = 1; shardLength <= email.length; shardLength++) {
+    allShards[shardLength] = createEmailShards(email, shardLength)
+  }
+  return allShards
+}
+
 export const shardMultipleEmails = (emails) => {
   const emailArray = Object.keys(emails)
   const maxEmailLength = Math.max(...emailArray.map(email => email.length))
