@@ -1,18 +1,19 @@
-import { UPDATE_EMAIL_CHARS, TOOGLE_ANALYZE_ALL } from '../actions/Constants'
+import { UPDATE_EMAIL_CHARS, TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS } from '../actions/Constants'
 
 export function emailAnalysis(
   state = {
     letterCount: {},
-    analyzeAll: false
+    countLettersForAllEmails: false,
+
   },
   action
 ) {
   let newState = ''
 
   switch (action.type) {
-    case TOOGLE_ANALYZE_ALL:
+    case TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS:
       newState = { ...state }
-      newState.analyzeAll = !newState.analyzeAll
+      newState.countLettersForAllEmails = !newState.countLettersForAllEmails
       return newState
     case UPDATE_EMAIL_CHARS:
       newState = { ...state }

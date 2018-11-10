@@ -1,10 +1,10 @@
 import React from 'react'
 import { FlexBox, StyledChar, StyledCharContainer } from './sharedComponents/CommonStyles'
 import { connect } from 'react-redux'
-import { updateEmailLetterCount, toggleAnalyzeAll } from '../actions/Actions'
+import { updateEmailLetterCount, toggleCountLettersForAllEmails } from '../actions/Actions'
 
 const LetterCountPage = (props) => {
-  const peopleToAnalyze = props.analyzeAll ? props.people.all : props.people.current
+  const peopleToAnalyze = props.countLettersForAllEmails ? props.people.all : props.people.current
   const handleAnalyze = () => props.updateEmailLetterCount(peopleToAnalyze)
 
   const showAnalysis = Object.keys(props.letterCount).length > 0
@@ -23,8 +23,8 @@ const LetterCountPage = (props) => {
         (<FlexBox>
           <h1>Char Counts</h1>
           <button onClick={handleAnalyze}>Update Analysis</button>
-          <button onClick={props.toggleAnalyzeAll}>
-            {props.analyzeAll ? 'Analysis for This Page' : 'Analysis for All Email'}
+          <button onClick={props.toggleCountLettersForAllEmails}>
+            {props.countLettersForAllEmails ? 'Analysis for This Page' : 'Analysis for All Email'}
           </button>
           <StyledCharContainer>
             {letterCountContent}
@@ -39,13 +39,13 @@ const mapStateToProps = (state) => {
   return {
     people: state.people,
     letterCount: state.emailAnalysis.letterCount,
-    analyzeAll: state.emailAnalysis.analyzeAll
+    countLettersForAllEmails: state.emailAnalysis.countLettersForAllEmails
   }
 }
 
 const mapDispatchToProps = {
   updateEmailLetterCount,
-  toggleAnalyzeAll
+  toggleCountLettersForAllEmails
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LetterCountPage)

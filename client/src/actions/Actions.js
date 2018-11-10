@@ -38,32 +38,8 @@ export function updateEmailLetterCount(peopleArray) {
   }
 }
 
-export function toggleAnalyzeAll() {
+export function toggleCountLettersForAllEmails() {
   return {
-    type: actions.TOOGLE_ANALYZE_ALL
-  }
-}
-
-const breakEmailIntoSubStrings = (email, subLength, subStrings = {}) => {
-  for (let i = 0; i < email.length - subLength + 1; i++) {
-    const subString = email.substr(i, subLength)
-    if (!subStrings[subString]) subStrings[subString] = { [email]: 0 }
-    subStrings[subString][email] ? subStrings[subString][email] += 1 : subStrings[subString][email] = 1
-  }
-  return subStrings
-}
-
-export function breakAllEmailsIntoSubStrings(allEmails) {
-  const maxEmailLength = Math.max(...allEmails.map(email => email.length))
-  const allEmailAnalysis = {}
-  for (let i = 0; i <= maxEmailLength; i++) {
-    const analysis = allEmails.reduce((tracker, email) => {
-      return breakEmailIntoSubStrings(email, i, tracker)
-    }, {})
-    allEmailAnalysis[i] = analysis
-  }
-  return {
-    type: actions.ADD_ALL_EMAIL_SUBSTRINGS,
-    allEmailAnalysis
+    type: actions.TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS
   }
 }
