@@ -2,7 +2,7 @@ import { UPDATE_EMAIL_CHARS, TOOGLE_ANALYZE_ALL } from '../actions/Constants'
 
 export function emailAnalysis(
   state = {
-    results: {},
+    letterCount: {},
     analyzeAll: false
   },
   action
@@ -16,7 +16,7 @@ export function emailAnalysis(
       return newState
     case UPDATE_EMAIL_CHARS:
       newState = { ...state }
-      newState.results = action.results
+      newState.letterCount = action.letterCount
       return newState
     default:
       return state

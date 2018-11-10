@@ -1,19 +1,19 @@
 import React from 'react'
 import { FlexBox, StyledChar, StyledCharContainer } from './sharedComponents/CommonStyles'
 import { connect } from 'react-redux'
-import { updateEmailChars, toggleAnalyzeAll } from '../actions/Actions'
+import { updateEmailLetterCount, toggleAnalyzeAll } from '../actions/Actions'
 
-const EmailAnalysisPage = (props) => {
+const LetterCountPage = (props) => {
   const peopleToAnalyze = props.analyzeAll ? props.people.all : props.people.current
-  const handleAnalyze = () => props.updateEmailChars(peopleToAnalyze)
+  const handleAnalyze = () => props.updateEmailLetterCount(peopleToAnalyze)
 
-  const showAnalysis = Object.keys(props.emailAnalysis).length > 0
+  const showAnalysis = Object.keys(props.letterCount).length > 0
   const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('')
-  const sortedLetters = allLetters.sort((a, b) => (props.emailAnalysis[b] || 0) - (props.emailAnalysis[a] || 0))
+  const sortedLetters = allLetters.sort((a, b) => (props.letterCount[b] || 0) - (props.letterCount[a] || 0))
 
-  const emailAnalysisContent = sortedLetters.map(char => (
+  const letterCountContent = sortedLetters.map(char => (
     <StyledChar key={char}>
-      {char}: {props.emailAnalysis[char] || 0}
+      {char}: {props.letterCount[char] || 0}
     </StyledChar>
   ))
 
@@ -27,7 +27,7 @@ const EmailAnalysisPage = (props) => {
             {props.analyzeAll ? 'Analysis for This Page' : 'Analysis for All Email'}
           </button>
           <StyledCharContainer>
-            {emailAnalysisContent}
+            {letterCountContent}
           </StyledCharContainer>
         </FlexBox>) :
         <button onClick={handleAnalyze}>Display Email Analysis</button>}
@@ -38,14 +38,14 @@ const EmailAnalysisPage = (props) => {
 const mapStateToProps = (state) => {
   return {
     people: state.people,
-    emailAnalysis: state.emailAnalysis.results,
+    letterCount: state.emailAnalysis.letterCount,
     analyzeAll: state.emailAnalysis.analyzeAll
   }
 }
 
 const mapDispatchToProps = {
-  updateEmailChars,
+  updateEmailLetterCount,
   toggleAnalyzeAll
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailAnalysisPage)
+export default connect(mapStateToProps, mapDispatchToProps)(LetterCountPage)
