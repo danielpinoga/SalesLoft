@@ -1,0 +1,75 @@
+import {
+  RECEIVE_PEOPLE_SUCCESS,
+  RECEIVE_PEOPLE_FAILURE,
+  UPDATE_EMAIL_CHARS,
+  TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS,
+  UPDATE_EMAIL_SHARDS
+} from '../actions/Constants'
+
+export function peopleInfo(
+  state = {
+    allPeople: {},
+    currentPeople: {},
+    page: 1,
+    letterCount: {},
+    countLettersForAllEmails: false,
+    emailShards: {},
+    emailsAlreadySharded: {}
+  },
+  action
+) {
+  let newState = {}
+  switch (action.type) {
+    case RECEIVE_PEOPLE_SUCCESS:
+      newState = { ...state }
+      action.people.forEach(person => newState.allPeople[person.id] = person
+      )
+      newState.currentPeople = {}
+      action.people.forEach(person => newState.currentPeople[person.id] = person)
+
+      newState.page = action.page
+      return newState
+
+    case RECEIVE_PEOPLE_FAILURE:
+      console.error('Failure to get people from API.')
+      return state
+
+    case TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS:
+      newState = { ...state }
+      newState.countLettersForAllEmails = !newState.countLettersForAllEmails
+      return newState
+
+    case UPDATE_EMAIL_CHARS:
+      newState = { ...state }
+      newState.letterCount = action.letterCount
+      return newState
+
+    case UPDATE_EMAIL_SHARDS:
+
+      return state
+    default:
+      return state
+  }
+}
+
+const createEmailShards = (email, shardLength, shards = {}) => {
+  for (let i = 0; i < email.length - shardLength + 1; i++) {
+    const shard = email.substr(i, shardLength)
+    if (!shards[shard]) shards[shard] = { [email]: 0 }
+    shards[shard][email] ? shards[shard][email] += 1 : shards[shard][email] = 1
+  }
+  return shards
+}
+
+const shardMultipleEmails = (emails) => {
+  const maxEmailLength = Math.max(...emails.map(email => email.length))
+  const allShards = {}
+  for (let shardLength = 0; shardLength <= maxEmailLength; shardLength++) {
+    allShards[shardLength] = emails.reduce((shards, email) => createEmailShards(email, shardLength, shards), {})
+  }
+  return allShards
+}
+
+const determineUnshardedEmails = (allEmails, shardedEmails) => {
+
+}

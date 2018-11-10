@@ -2,14 +2,12 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
 import { me } from './Me'
-import { people } from './People'
-import { emailAnalysis } from './EmailAnalysis'
+import { peopleInfo } from './PeopleInfo'
 
 const Reducers = combineReducers({
   router: routerReducer,
   me,
-  people,
-  emailAnalysis
+  peopleInfo
 });
 
 export default Reducers

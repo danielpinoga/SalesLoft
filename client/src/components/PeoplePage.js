@@ -39,7 +39,7 @@ class PeoplePage extends Component {
   }
 
   render() {
-    console.log(Object.keys(this.props.people.all).length)
+    console.log(Object.keys(this.props.allPeople).length)
     const goNext = () => {
       const nextPage = this.state.page + 1
       this.props.fetchPeople(nextPage)
@@ -52,8 +52,8 @@ class PeoplePage extends Component {
       this.setState({ page: lastPage })
     }
 
-    let peopleContent = Object.keys(this.props.people.current).map(id => {
-      const person = this.props.people.current[id]
+    let peopleContent = Object.keys(this.props.currentPeople).map(id => {
+      const person = this.props.currentPeople[id]
       return (
         <StyledPerson key={person.id} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
@@ -88,7 +88,8 @@ class PeoplePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people
+    allPeople: state.peopleInfo.allPeople,
+    currentPeople: state.peopleInfo.currentPeople
   }
 }
 

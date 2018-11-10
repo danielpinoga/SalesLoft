@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { updateEmailLetterCount, toggleCountLettersForAllEmails } from '../actions/Actions'
 
 const LetterCountPage = (props) => {
-  const peopleToAnalyze = props.countLettersForAllEmails ? props.people.all : props.people.current
+  const peopleToAnalyze = props.countLettersForAllEmails ? props.allPeople : props.currentPeople
   const handleAnalyze = () => props.updateEmailLetterCount(peopleToAnalyze)
 
   const showAnalysis = Object.keys(props.letterCount).length > 0
@@ -37,9 +37,10 @@ const LetterCountPage = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    people: state.people,
-    letterCount: state.emailAnalysis.letterCount,
-    countLettersForAllEmails: state.emailAnalysis.countLettersForAllEmails
+    allPeople: state.peopleInfo.allPeople,
+    currentPeople: state.peopleInfo.currentPeople,
+    letterCount: state.peopleInfo.letterCount,
+    countLettersForAllEmails: state.peopleInfo.countLettersForAllEmails
   }
 }
 
