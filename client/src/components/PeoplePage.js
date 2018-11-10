@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import EmailAnalysisPage from './EmailAnalysisPage'
 import { fetchPeople } from '../actions/AsyncActions'
+import { updateEmailShards } from '../actions/Actions'
 
 const PeoplePageWrapper = styled.div`
   display: flex;
@@ -35,7 +36,8 @@ class PeoplePage extends Component {
   }
 
   async componentDidMount() {
-    this.props.fetchPeople(this.state.page)
+    await this.props.fetchPeople(this.state.page)
+    this.props.updateEmailShards()
   }
 
   render() {
@@ -94,7 +96,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchPeople
+  fetchPeople,
+  updateEmailShards
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage)

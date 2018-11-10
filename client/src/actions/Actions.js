@@ -43,3 +43,9 @@ export function toggleCountLettersForAllEmails() {
     type: actions.TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS
   }
 }
+
+export function updateEmailShards() {
+  return {
+    type: actions.UPDATE_EMAIL_SHARDS
+  }
+}

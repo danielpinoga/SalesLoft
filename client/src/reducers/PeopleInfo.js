@@ -45,8 +45,13 @@ export function peopleInfo(state = defaultState, action) {
       return newState
 
     case UPDATE_EMAIL_SHARDS:
+      const emailsToBeSharded = determineUnshardedEmails(state.allPeople, state.emailsAlreadySharded)
+      const newShards = shardMultipleEmails(emailsToBeSharded)
 
-      return state
+      newState = { ...state }
+      newState.emailShards = newShards //NEED TO MERGE WITH EXISTING SHARDS
+      newState.emailsAlreadySharded = { ...newState.emailsAlreadySharded, ...emailsToBeSharded }
+      return newState
     default:
       return state
   }
@@ -62,14 +67,19 @@ const createEmailShards = (email, shardLength, shards = {}) => {
 }
 
 const shardMultipleEmails = (emails) => {
-  const maxEmailLength = Math.max(...emails.map(email => email.length))
+  const emailArray = Object.keys(emails)
+  const maxEmailLength = Math.max(...emailArray.map(email => email.length))
   const allShards = {}
   for (let shardLength = 0; shardLength <= maxEmailLength; shardLength++) {
-    allShards[shardLength] = emails.reduce((shards, email) => createEmailShards(email, shardLength, shards), {})
+    allShards[shardLength] = emailArray.reduce((shards, email) => createEmailShards(email, shardLength, shards), {})
   }
   return allShards
 }
 
-const determineUnshardedEmails = (allEmails, shardedEmails) => {
-
+const determineUnshardedEmails = (allPeople, shardedEmails) => {
+  const emailsToBeSharded = {}
+  const allEmails = Object.keys(allPeople).map(id => allPeople[id].email_address)
+  const filteredEmails = allEmails.filter(email => !shardedEmails[email])
+  filteredEmails.forEach(email => emailsToBeSharded[email] = true)
+  return emailsToBeSharded
 }
