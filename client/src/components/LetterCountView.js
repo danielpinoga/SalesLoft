@@ -3,7 +3,7 @@ import { FlexBox, StyledChar, StyledCharContainer } from './sharedComponents/Com
 import { connect } from 'react-redux'
 import { updateEmailLetterCount, toggleCountLettersForAllEmails } from '../actions/Actions'
 
-const LetterCountPage = (props) => {
+const LetterCountView = (props) => {
   const peopleToAnalyze = props.countLettersForAllEmails ? props.allPeople : props.currentPeople
   const handleAnalyze = () => props.updateEmailLetterCount(peopleToAnalyze)
 
@@ -22,15 +22,15 @@ const LetterCountPage = (props) => {
       {showAnalysis ?
         (<FlexBox>
           <h1>Char Counts</h1>
-          <button onClick={handleAnalyze}>Update Analysis</button>
+          <button onClick={handleAnalyze}>Update Email Letter Count</button>
           <button onClick={props.toggleCountLettersForAllEmails}>
-            {props.countLettersForAllEmails ? 'Analysis for This Page' : 'Analysis for All Email'}
+            {props.countLettersForAllEmails ? 'Track Letters Only on This Page' : 'Track Letters on All Loaded Pages'}
           </button>
           <StyledCharContainer>
             {letterCountContent}
           </StyledCharContainer>
         </FlexBox>) :
-        <button onClick={handleAnalyze}>Display Email Analysis</button>}
+        <button onClick={handleAnalyze}>Display Email Letter Count</button>}
     </FlexBox>
   )
 }
@@ -49,4 +49,4 @@ const mapDispatchToProps = {
   toggleCountLettersForAllEmails
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LetterCountPage)
+export default connect(mapStateToProps, mapDispatchToProps)(LetterCountView)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import EmailAnalysisPage from './EmailAnalysisPage'
+import LetterCountView from './LetterCountView'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
 import { PeoplePageWrapper, FlexBox } from './sharedComponents/CommonStyles'
@@ -94,7 +94,7 @@ class PeoplePage extends Component {
       <PeoplePageWrapper>
         <h1>People Page</h1>
         {pageNavigation}
-        <EmailAnalysisPage />
+        <LetterCountView />
 
         <FlexBox>
           <h3>Dupe Tester</h3>
