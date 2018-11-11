@@ -35,17 +35,12 @@ class PeoplePage extends Component {
     this.props.updateEmailShards()
   }
 
-  goNext = () => {
-    const nextPage = this.state.page + 1
-    this.props.fetchPeople(nextPage)
-    this.setState({ page: nextPage, checkForDupes: false })
+  changePage = async (direction) => {
+    this.setState({ loading: true })
+    const nextPage = (direction === 'next') ? this.state.page + 1 : this.state.page - 1
+    await this.props.fetchPeople(nextPage)
+    this.setState({ page: nextPage, checkForDupes: false, loading: false })
     this.props.updateEmailShards()
-  }
-
-  goBack = () => {
-    const lastPage = this.state.page - 1
-    this.props.fetchPeople(lastPage)
-    this.setState({ page: lastPage, checkForDupes: false })
   }
 
   checkForDupes = () => {
@@ -87,17 +82,18 @@ class PeoplePage extends Component {
 
     const pageNavigation = (
       <div>
-        {this.state.page > 1 ? <span onClick={this.goBack}>Back One Page | </span> : <span >On First Page | </span>}
+        {this.state.page > 1 ? <span onClick={() => this.changePage('back')}>Back One Page | </span> : <span >On First Page | </span>}
         Current Page: {this.state.page} |
-        <span onClick={this.goNext}> Next Page</span>
+        <span onClick={() => this.changePage('next')}> Next Page</span>
       </div>
     )
+
+
 
     return (
       <PeoplePageWrapper>
         <h1>People Page</h1>
         {pageNavigation}
-
         <EmailAnalysisPage />
 
         <FlexBox>
@@ -110,7 +106,7 @@ class PeoplePage extends Component {
         </FlexBox>
         <button onClick={this.checkForDupes}>Check For Dupes</button>
         <StyledPeopleContainer>
-          {peopleContent}
+          {this.state.loading ? <img src='/loading.gif' alt='loading' /> : peopleContent}
         </StyledPeopleContainer>
       </PeoplePageWrapper>
     )
