@@ -140,11 +140,7 @@ const checkNewEmail = (newEmail, subLength, allEmailAnalysis) => {
   const dupeTracker = {}
   const newEmailAnalysis = breakEmailIntoSubStrings(newEmail, subLength)
   const allFoundSubstrings = Object.keys(newEmailAnalysis)
-  console.log(allFoundSubstrings)
   allFoundSubstrings.forEach(subString => {
-    if (subString === 'dorothea_breitenberg@oconnell.in') {
-      console.log(allEmailAnalysis)
-    }
     if (allEmailAnalysis[subString]) {
       const emailsWithSubString = Object.keys(allEmailAnalysis[subString])
       emailsWithSubString.forEach(email => {
