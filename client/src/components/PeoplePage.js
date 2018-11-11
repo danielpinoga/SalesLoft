@@ -54,19 +54,21 @@ class PeoplePage extends Component {
   render() {
     let peopleContent = Object.keys(this.props.currentPeople).map(key => {
       const person = this.props.currentPeople[key]
-      let dupeContent = 'Checking'
+      let dupeResults = {}
       if (this.state.checkForDupes) {
-        console.log('doing something')
-        console.log(checkForDupeLogic(person.email_address, this.props.emailShards))
-        dupeContent = 'checked'
+        dupeResults = checkForDupeLogic(person.email_address, this.props.emailShards)
       }
-      console.log(dupeContent)
       return (
         <StyledPerson key={key} to={`/people/${person.id}`}>
           <div>Name: {person.first_name} {person.last_name}</div>
           <div>Email: {person.email_address}</div>
           <div>Job Title: {person.title}</div>
-          {this.state.checkForDupes ? <div>{dupeContent}</div> : null}
+          {this.state.checkForDupes ? (
+            <div>
+              <div>Best Dupe: {dupeResults.bestDupe}</div>
+              <div> confidence: {parseInt(dupeResults.confidence * 100)}%</div>
+            </div>
+          ) : null}
         </StyledPerson>
       )
     })
@@ -138,7 +140,11 @@ const checkNewEmail = (newEmail, subLength, allEmailAnalysis) => {
   const dupeTracker = {}
   const newEmailAnalysis = breakEmailIntoSubStrings(newEmail, subLength)
   const allFoundSubstrings = Object.keys(newEmailAnalysis)
+  console.log(allFoundSubstrings)
   allFoundSubstrings.forEach(subString => {
+    if (subString === 'dorothea_breitenberg@oconnell.in') {
+      console.log(allEmailAnalysis)
+    }
     if (allEmailAnalysis[subString]) {
       const emailsWithSubString = Object.keys(allEmailAnalysis[subString])
       emailsWithSubString.forEach(email => {
@@ -157,6 +163,7 @@ const checkForDupeLogic = (newEmail, allEmailShards) => {
   const dupeCheckResults = {}
   for (let i = 1; i < newEmail.length; i++) {
     const allEmailAnalysis = allEmailShards[i]
+    if (!allEmailAnalysis) continue
     const newEmailAnalysis = checkNewEmail(newEmail, i, allEmailAnalysis)
     Object.keys(newEmailAnalysis).reduce((finalAnalysis, matchedEmail) => {
       if (finalAnalysis[matchedEmail]) {
@@ -167,5 +174,9 @@ const checkForDupeLogic = (newEmail, allEmailShards) => {
       return finalAnalysis
     }, dupeCheckResults)
   }
-  return dupeCheckResults
+  const sortedDupeCheckResults = Object.keys(dupeCheckResults).sort((a, b) => dupeCheckResults[b] - dupeCheckResults[a])
+
+  const bestDupe = sortedDupeCheckResults[1]
+  const confidence = dupeCheckResults[bestDupe] / dupeCheckResults[newEmail]
+  return { bestDupe, confidence }
 }
