@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import EmailAnalysisPage from './EmailAnalysisPage'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
-import { PeoplePageWrapper } from './sharedComponents/CommonStyles'
+import { PeoplePageWrapper, FlexBox } from './sharedComponents/CommonStyles'
 import { shardSingleEmail } from '../utils';
 
 const StyledPeopleContainer = styled.div`
@@ -59,7 +59,7 @@ class PeoplePage extends Component {
     const newState = { ...this.state }
     newState[event.target.name] = emailAddress
     newState.bestDupe = dupeResults.bestDupe
-    newState.confidence = dupeResults.confidence
+    newState.points = dupeResults.points
     this.setState(newState)
   }
 
@@ -68,7 +68,7 @@ class PeoplePage extends Component {
       const person = this.props.currentPeople[key]
       let dupeResults = {}
       if (this.state.checkForDupes) {
-        dupeResults = checkForDupeLogic(person.email_address, this.props.emailShards)
+        dupeResults = checkForDupeLogic(person.email_address, this.props.emailShards) //STORE THIS IN THE STORE (render rechecks)
       }
       return (
         <StyledPerson key={key} to={`/people/${person.id}`}>
@@ -78,7 +78,7 @@ class PeoplePage extends Component {
           {this.state.checkForDupes ? (
             <div>
               <div>Best Dupe: {dupeResults.bestDupe}</div>
-              <div> confidence: {parseInt(dupeResults.confidence * 100)}%</div>
+              <div>Points: {dupeResults.points}</div>
             </div>
           ) : null}
         </StyledPerson>
@@ -100,14 +100,14 @@ class PeoplePage extends Component {
 
         <EmailAnalysisPage />
 
-        <div>
+        <FlexBox>
           <h3>Dupe Tester</h3>
           <input name='emailInput' onChange={this.handleChange} value={this.state.emailInput} />
           <div>
             <div>Best Dupe: {this.state.bestDupe}</div>
-            <div>Confidence: {this.state.confidence}</div>
+            <div>Confidence: {this.state.points}</div>
           </div>
-        </div>
+        </FlexBox>
         <button onClick={this.checkForDupes}>Check For Dupes</button>
         <StyledPeopleContainer>
           {peopleContent}
@@ -144,7 +144,7 @@ const breakEmailIntoSubStrings = (email, subLength, subStrings = {}) => {
 }
 
 const subLengthFactor = (subLength) => {
-  return subLength / 2
+  return subLength * 10
 }
 
 /*
@@ -192,7 +192,8 @@ const checkForDupeLogic = (newEmail, allEmailShards) => {
   }
   const sortedDupeCheckResults = Object.keys(dupeCheckResults).sort((a, b) => dupeCheckResults[b] - dupeCheckResults[a])
 
-  const bestDupe = sortedDupeCheckResults[1]
-  const confidence = dupeCheckResults[bestDupe] / dupeCheckResults[newEmail]
-  return { bestDupe, confidence }
+  if (sortedDupeCheckResults[0] === newEmail) sortedDupeCheckResults.shift()
+  const bestDupe = sortedDupeCheckResults[0]
+  const points = dupeCheckResults[bestDupe]
+  return { bestDupe, points }
 }
