@@ -26,7 +26,8 @@ const StyledPerson = styled.div`
 class PeoplePage extends Component {
   state = {
     page: 1,
-    checkForDupes: false
+    checkForDupes: false,
+    emailInput: ''
   }
 
   async componentDidMount() {
@@ -49,6 +50,17 @@ class PeoplePage extends Component {
 
   checkForDupes = () => {
     this.setState({ checkForDupes: true })
+  }
+
+  handleChange = (event) => {
+    const emailAddress = event.target.value
+    const dupeResults = checkForDupeLogic(emailAddress, this.props.emailShards)
+
+    const newState = { ...this.state }
+    newState[event.target.name] = emailAddress
+    newState.bestDupe = dupeResults.bestDupe
+    newState.confidence = dupeResults.confidence
+    this.setState(newState)
   }
 
   render() {
@@ -88,6 +100,14 @@ class PeoplePage extends Component {
 
         <EmailAnalysisPage />
 
+        <div>
+          <h3>Dupe Tester</h3>
+          <input name='emailInput' onChange={this.handleChange} value={this.state.emailInput} />
+          <div>
+            <div>Best Dupe: {this.state.bestDupe}</div>
+            <div>Confidence: {this.state.confidence}</div>
+          </div>
+        </div>
         <button onClick={this.checkForDupes}>Check For Dupes</button>
         <StyledPeopleContainer>
           {peopleContent}
