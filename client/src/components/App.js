@@ -23,10 +23,7 @@ const App = ({ store }) => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <Router>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/people" component={PeoplePage} />
-        </Switch>
+        <Route exact path="/" component={PeoplePage} />
       </Router>
     </ThemeProvider>
   </Provider>

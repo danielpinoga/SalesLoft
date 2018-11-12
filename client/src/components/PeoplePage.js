@@ -92,8 +92,9 @@ class PeoplePage extends Component {
 
     return (
       <PeoplePageWrapper>
-        <h1>People Page</h1>
+        <h1>SalesLoft Developer Interview</h1>
         {pageNavigation}
+
         <LetterCountView />
 
         <FlexBox>
