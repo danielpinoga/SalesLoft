@@ -1,12 +1,5 @@
 import * as actions from './Constants'
 
-export function receiveMe(me) {
-  return {
-    type: actions.RECEIVE_ME,
-    me
-  }
-}
-
 export function receivePeopleSuccess(people, page) {
   return {
     type: actions.RECEIVE_PEOPLE_SUCCESS,

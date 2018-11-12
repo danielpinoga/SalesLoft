@@ -11,8 +11,6 @@ import Reducers from './reducers/CombinedReducers'
 
 import createHistory from 'history/createBrowserHistory'
 
-import { fetchMe } from './actions/AsyncActions'
-
 const history = createHistory()
 const middlewares = [thunkMiddleware, routerMiddleware(history)]
 let store = createStore(
@@ -21,9 +19,6 @@ let store = createStore(
 )
 
 window.store = store
-
-// bootstrap state
-store.dispatch(fetchMe())
 
 ReactDOM.render(
   <App store={store} />,
