@@ -1,8 +1,3 @@
-# Daniel Pino - SalesLoft Development Interview
-
-Requirements found here: https://docs.google.com/document/d/1SbhRTd6ewr0w1rgE-nB8yk7LR1exy8rL0JJCMAwgfns/edit
-
-
 ## Remaining Tasks
 - Fix confidence points to indicate strong match Vs weak match
   - Idea: Given number of letters in the input (`n`), the perfect score would be `n!`. Might make sense that anything over `(n/2)!` would be high enough to guess correctly.
