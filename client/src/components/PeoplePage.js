@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import LetterCountView from './LetterCountView'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
-import { PeoplePageWrapper, FlexBox } from './sharedComponents/CommonStyles'
-import { shardSingleEmail } from '../utils';
+import { PeoplePageWrapper, FlexBox } from './Styles'
+import { shardSingleEmail } from '../utils'
 
 const StyledPeopleContainer = styled.div`
   display: flex;

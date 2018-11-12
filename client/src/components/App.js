@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { LandingPage } from './LandingPage'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import PeoplePage from './PeoplePage'
 
 const theme = {
@@ -17,7 +16,7 @@ const theme = {
       dark: '#13073A',
     }
   }
-};
+}
 
 const App = ({ store }) => (
   <Provider store={store}>
@@ -27,10 +26,10 @@ const App = ({ store }) => (
       </Router>
     </ThemeProvider>
   </Provider>
-);
+)
 
 App.propTypes = {
   store: PropTypes.object.isRequired
-};
+}
 
 export default App
