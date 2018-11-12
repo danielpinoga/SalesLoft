@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import LetterCountView from './LetterCountView'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
 import { PeoplePageWrapper } from './Styles'
 import { shardSingleEmail } from '../utils'
-import PersonCard from './PersonCard'
 import DupeChecker from './DupeChecker';
+import PageNavigation from './PageNavigation';
+import PeopleList from './PeopleList';
 
-const StyledPeopleContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-`
 
 class PeoplePage extends Component {
   state = {
@@ -52,33 +46,17 @@ class PeoplePage extends Component {
   }
 
   render() {
-    let peopleContent = Object.keys(this.props.currentPeople).map(key => {
-      const person = this.props.currentPeople[key]
-      //TODO - put dupeResults in store (a re-render rechecks dupes)
-      const dupeResults = this.state.checkForDupes ? checkForDupeLogic(person.email_address, this.props.emailShards) : {}
-      return <PersonCard key={key} person={person} dupeResults={dupeResults} />
-    })
-
-    const pageNavigation = (
-      <div>
-        {this.state.page > 1 ? <span onClick={() => this.changePage('back')}>Back One Page | </span> : <span >On First Page | </span>}
-        Current Page: {this.state.page} |
-        <span onClick={() => this.changePage('next')}> Next Page</span>
-      </div>
-    )
-
     return (
       <PeoplePageWrapper>
         <h1>SalesLoft Developer Interview</h1>
-        {pageNavigation}
 
+        <PageNavigation page={this.state.page} changePage={this.changePage} />
         <LetterCountView />
         <DupeChecker handleChange={this.handleChange} emailImput={this.state.emailInput} bestDupe={this.state.bestDupe} points={this.state.points} />
 
         <button onClick={this.checkForDupes}>Check For Dupes</button>
-        <StyledPeopleContainer>
-          {this.state.loading ? <img src='/loading.gif' alt='loading' /> : peopleContent}
-        </StyledPeopleContainer>
+
+        <PeopleList loading={this.state.loading} checkForDupes={this.state.checkForDupes} checkForDupeLogic={checkForDupeLogic} />
       </PeoplePageWrapper>
     )
   }
@@ -87,7 +65,6 @@ class PeoplePage extends Component {
 const mapStateToProps = (state) => {
   return {
     allPeople: state.peopleInfo.allPeople,
-    currentPeople: state.peopleInfo.currentPeople,
     emailShards: state.peopleInfo.emailShards
   }
 }
@@ -99,6 +76,12 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage)
 
+
+
+
+
+
+// BELOW LOGIC TO BE REFACTORED AND MOVED
 
 
 const breakEmailIntoSubStrings = (email, subLength, subStrings = {}) => {
