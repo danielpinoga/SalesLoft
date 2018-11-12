@@ -4,23 +4,16 @@ import styled from 'styled-components'
 import LetterCountView from './LetterCountView'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards } from '../actions/Actions'
-import { PeoplePageWrapper, FlexBox } from './Styles'
+import { PeoplePageWrapper } from './Styles'
 import { shardSingleEmail } from '../utils'
+import PersonCard from './PersonCard'
+import DupeChecker from './DupeChecker';
 
 const StyledPeopleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 20px;
-`
-
-const StyledPerson = styled.div`
-  border: solid 2px black;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  width: 350px;
-  text-decoration: none;
-  margin: 10px;
-  padding: 15px;
 `
 
 class PeoplePage extends Component {
@@ -61,23 +54,9 @@ class PeoplePage extends Component {
   render() {
     let peopleContent = Object.keys(this.props.currentPeople).map(key => {
       const person = this.props.currentPeople[key]
-      let dupeResults = {}
-      if (this.state.checkForDupes) {
-        dupeResults = checkForDupeLogic(person.email_address, this.props.emailShards) //STORE THIS IN THE STORE (render rechecks)
-      }
-      return (
-        <StyledPerson key={key} to={`/people/${person.id}`}>
-          <div>Name: {person.first_name} {person.last_name}</div>
-          <div>Email: {person.email_address}</div>
-          <div>Job Title: {person.title}</div>
-          {this.state.checkForDupes ? (
-            <div>
-              <div>Best Dupe: {dupeResults.bestDupe}</div>
-              <div>Points: {dupeResults.points}</div>
-            </div>
-          ) : null}
-        </StyledPerson>
-      )
+      //TODO - put dupeResults in store (a re-render rechecks dupes)
+      const dupeResults = this.state.checkForDupes ? checkForDupeLogic(person.email_address, this.props.emailShards) : {}
+      return <PersonCard key={key} person={person} dupeResults={dupeResults} />
     })
 
     const pageNavigation = (
@@ -88,23 +67,14 @@ class PeoplePage extends Component {
       </div>
     )
 
-
-
     return (
       <PeoplePageWrapper>
         <h1>SalesLoft Developer Interview</h1>
         {pageNavigation}
 
         <LetterCountView />
+        <DupeChecker handleChange={this.handleChange} emailImput={this.state.emailInput} bestDupe={this.state.bestDupe} points={this.state.points} />
 
-        <FlexBox>
-          <h3>Dupe Tester</h3>
-          <input name='emailInput' onChange={this.handleChange} value={this.state.emailInput} />
-          <div>
-            <div>Best Dupe: {this.state.bestDupe}</div>
-            <div>Confidence: {this.state.points}</div>
-          </div>
-        </FlexBox>
         <button onClick={this.checkForDupes}>Check For Dupes</button>
         <StyledPeopleContainer>
           {this.state.loading ? <img src='/loading.gif' alt='loading' /> : peopleContent}
