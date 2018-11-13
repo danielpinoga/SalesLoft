@@ -23,12 +23,22 @@ export function peopleInfo(state = defaultState, action) {
   switch (action.type) {
     case RECEIVE_PEOPLE_SUCCESS:
       newState = { ...state }
-      action.people.forEach(person => newState.allPeople[person.id] = person
-      )
       newState.currentPeople = {}
-      action.people.forEach(person => newState.currentPeople[person.id] = person)
-
       newState.page = action.page
+
+      const people = action.people.map(person => {
+        return {
+          id: person.id,
+          title: person.title,
+          display_name: person.display_name,
+          email_address: person.email_address
+        }
+      })
+
+      //convert array to object with ID as key (for easier searching)
+      people.forEach(person => newState.allPeople[person.id] = person)
+      people.forEach(person => newState.currentPeople[person.id] = person)
+
       return newState
 
     case RECEIVE_PEOPLE_FAILURE:

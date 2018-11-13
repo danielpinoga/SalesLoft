@@ -3,17 +3,24 @@ import { FlexBox, StyledChar, StyledCharContainer } from './Styles'
 import { connect } from 'react-redux'
 import { updateEmailLetterCount, toggleCountLettersForAllEmails } from '../actions/Actions'
 
-const LetterCountView = (props) => {
-  const peopleToAnalyze = props.countLettersForAllEmails ? props.allPeople : props.currentPeople
-  const handleAnalyze = () => props.updateEmailLetterCount(peopleToAnalyze)
+const LetterCountView = ({
+  countLettersForAllEmails,
+  allPeople,
+  currentPeople,
+  letterCount,
+  updateEmailLetterCount,
+  toggleCountLettersForAllEmails
+}) => {
+  const peopleToAnalyze = countLettersForAllEmails ? allPeople : currentPeople
+  const handleAnalyze = () => updateEmailLetterCount(peopleToAnalyze)
 
-  const showAnalysis = Object.keys(props.letterCount).length > 0
+  const showAnalysis = Object.keys(letterCount).length > 0
   const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('')
-  const sortedLetters = allLetters.sort((a, b) => (props.letterCount[b] || 0) - (props.letterCount[a] || 0))
+  const sortedLetters = allLetters.sort((a, b) => (letterCount[b] || 0) - (letterCount[a] || 0))
 
   const letterCountContent = sortedLetters.map(char => (
     <StyledChar key={char}>
-      {char}: {props.letterCount[char] || 0}
+      {char}: {letterCount[char] || 0}
     </StyledChar>
   ))
 
@@ -23,8 +30,8 @@ const LetterCountView = (props) => {
         (<FlexBox>
           <h1>Char Counts</h1>
           <button onClick={handleAnalyze}>Update Email Letter Count</button>
-          <button onClick={props.toggleCountLettersForAllEmails}>
-            {props.countLettersForAllEmails ? 'Track Letters Only on This Page' : 'Track Letters on All Loaded Pages'}
+          <button onClick={toggleCountLettersForAllEmails}>
+            {countLettersForAllEmails ? 'Track Letters Only on This Page' : 'Track Letters on All Loaded Pages'}
           </button>
           <StyledCharContainer>
             {letterCountContent}

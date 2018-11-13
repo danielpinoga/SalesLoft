@@ -63,3 +63,12 @@ export const deepMergeShards = (existingShards, newShards) => {
   })
   return existingShards
 }
+
+export const countLettersInEmails = (peopleArray) => {
+  return Object.keys(peopleArray).reduce((charTracker, id) => {
+    return peopleArray[id].email_address.split('').reduce((charTracker, char) => {
+      if (char.match(/[a-z]/i)) charTracker[char] ? charTracker[char] += 1 : charTracker[char] = 1
+      return charTracker
+    }, charTracker)
+  }, {})
+}

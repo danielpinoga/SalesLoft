@@ -12,7 +12,7 @@ const StyledPerson = styled.div`
 
 const PersonCard = ({ key, person, dupeResults }) => (
   <StyledPerson key={key} to={`/people/${person.id}`}>
-    <div>Name: {person.first_name} {person.last_name}</div>
+    <div>Name: {person.display_name}</div>
     <div>Email: {person.email_address}</div>
     <div>Job Title: {person.title}</div>
     {dupeResults.bestDupe ? (

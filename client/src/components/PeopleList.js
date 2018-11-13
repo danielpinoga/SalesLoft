@@ -15,6 +15,7 @@ const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes, checkF
     const person = currentPeople[key]
     //TODO - put dupeResults in store (a re-render rechecks dupes)
     const dupeResults = checkForDupes ? checkForDupeLogic(person.email_address, emailShards) : {}
+
     return <PersonCard key={key} person={person} dupeResults={dupeResults} />
   })
 
