@@ -1,13 +1,13 @@
 import React from 'react'
 import { FlexBox } from './Styles'
 
-const DupeChecker = (props) => (
+const DupeChecker = ({ handleChange, emailInput, bestDupe, points }) => (
   <FlexBox>
     <h3>Dupe Tester</h3>
-    <input name='emailInput' onChange={props.handleChange} value={props.emailInput} />
+    <input name='emailInput' onChange={handleChange} value={emailInput} />
     <div>
-      <div>Best Dupe: {props.bestDupe}</div>
-      <div>Confidence: {props.points}</div>
+      <div>Best Dupe: {bestDupe}</div>
+      <div>Confidence: {points}</div>
     </div>
   </FlexBox>
 )
