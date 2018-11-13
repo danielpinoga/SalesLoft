@@ -10,8 +10,8 @@ const StyledPerson = styled.div`
   padding: 15px;
 `
 
-const PersonCard = ({ key, person, dupeResults }) => (
-  <StyledPerson key={key} to={`/people/${person.id}`}>
+const PersonCard = ({ person, dupeResults }) => (
+  <StyledPerson to={`/people/${person.id}`}>
     <div>Name: {person.display_name}</div>
     <div>Email: {person.email_address}</div>
     <div>Job Title: {person.title}</div>
