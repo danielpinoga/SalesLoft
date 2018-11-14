@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import PersonCard from './PersonCard'
+import { checkForDupeLogic } from '../utils'
 
 const StyledPeopleContainer = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const StyledPeopleContainer = styled.div`
   padding: 20px;
 `
 
-const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes, checkForDupeLogic }) => {
+const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
   const peopleContent = Object.keys(currentPeople).map(key => {
     const person = currentPeople[key]
     //TODO - put dupeResults in store (a re-render rechecks dupes)
@@ -30,7 +31,9 @@ const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes, checkF
 const mapStateToProps = (state) => {
   return {
     currentPeople: state.peopleInfo.currentPeople,
-    emailShards: state.peopleInfo.emailShards
+    emailShards: state.peopleInfo.emailShards,
+    loading: state.peopleInfo.loading,
+    checkForDupes: state.peopleInfo.checkForDupes
   }
 }
 

@@ -5,13 +5,16 @@ import {
   UPDATE_EMAIL_CHARS,
   TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS,
   UPDATE_EMAIL_SHARDS,
-  UPDATE_PAGE
+  UPDATE_PAGE,
+  TOGGLE_CHECK_FOR_DUPES
 } from '../actions/Constants'
 
 const defaultState = {
   allPeople: {},
   currentPeople: {},
   page: 1,
+  loading: false,
+  checkForDupes: false,
   letterCount: {},
   countLettersForAllEmails: false,
   emailShards: {},
@@ -40,6 +43,7 @@ export function peopleInfo(state = defaultState, action) {
       people.forEach(person => newState.allPeople[person.id] = person)
       people.forEach(person => newState.currentPeople[person.id] = person)
 
+      newState.loading = false
       return newState
 
     case RECEIVE_PEOPLE_FAILURE:
@@ -68,7 +72,14 @@ export function peopleInfo(state = defaultState, action) {
     case UPDATE_PAGE:
       newState = { ...state }
       newState.page = action.page
+      newState.loading = true
       return newState
+
+    case TOGGLE_CHECK_FOR_DUPES:
+      newState = { ...state }
+      newState.checkForDupes = !state.checkForDupes
+      return newState
+
     default:
       return state
   }

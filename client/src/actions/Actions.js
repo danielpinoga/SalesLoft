@@ -18,3 +18,5 @@ export const toggleCountLettersForAllEmails = () => ({ type: actions.TOGGLE_COUN
 export const updateEmailShards = () => ({ type: actions.UPDATE_EMAIL_SHARDS })
 
 export const updatePage = (page) => ({ type: actions.UPDATE_PAGE, page })
+
+export const toggleCheckForDupes = () => ({ type: actions.TOGGLE_CHECK_FOR_DUPES })
