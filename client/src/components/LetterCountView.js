@@ -11,12 +11,12 @@ const LetterCountView = ({
   updateEmailLetterCount,
   toggleCountLettersForAllEmails
 }) => {
-  const peopleToAnalyze = countLettersForAllEmails ? allPeople : currentPeople
-  const handleAnalyze = () => updateEmailLetterCount(peopleToAnalyze)
-
-  const showAnalysis = Object.keys(letterCount).length > 0
   const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('')
+  const letterCountExists = Object.keys(letterCount).length > 0
+  const peopleToAnalyze = countLettersForAllEmails ? allPeople : currentPeople
   const sortedLetters = allLetters.sort((a, b) => (letterCount[b] || 0) - (letterCount[a] || 0))
+
+  const handleAnalyze = () => updateEmailLetterCount(peopleToAnalyze)
 
   const letterCountContent = sortedLetters.map(char => (
     <StyledChar key={char}>
@@ -24,21 +24,24 @@ const LetterCountView = ({
     </StyledChar>
   ))
 
+  const trackingButton = (
+    <button onClick={toggleCountLettersForAllEmails}>
+      {countLettersForAllEmails ? 'Track Letters Only on This Page' : 'Track Letters on All Loaded Pages'}
+    </button>
+  )
+
   return (
     <FlexBox>
-      {showAnalysis ?
-        (<FlexBox>
-          <h1>Char Counts</h1>
-          <button onClick={handleAnalyze}>Update Email Letter Count</button>
-          <button onClick={toggleCountLettersForAllEmails}>
-            {countLettersForAllEmails ? 'Track Letters Only on This Page' : 'Track Letters on All Loaded Pages'}
-          </button>
+      <button onClick={handleAnalyze}>Update Email Letter Count</button>
+      {letterCountExists ? (
+        <FlexBox>
+          {trackingButton}
           <StyledCharContainer>
             {letterCountContent}
           </StyledCharContainer>
-        </FlexBox>) :
-        <button onClick={handleAnalyze}>Display Email Letter Count</button>}
-    </FlexBox>
+        </FlexBox>
+      ) : null}
+    </FlexBox >
   )
 }
 

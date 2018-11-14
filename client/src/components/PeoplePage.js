@@ -12,21 +12,20 @@ import PeopleList from './PeopleList';
 
 class PeoplePage extends Component {
   state = {
-    page: 1,
     checkForDupes: false,
     emailInput: ''
   }
 
   async componentDidMount() {
-    await this.props.fetchPeople(this.state.page)
-    this.props.updateEmailShards()
+    await this.fetchPeopleAndUpdateShards()
   }
 
-  changePage = async (direction) => {
-    this.setState({ loading: true })
-    const nextPage = (direction === 'next') ? this.state.page + 1 : this.state.page - 1
-    await this.props.fetchPeople(nextPage)
-    this.setState({ page: nextPage, checkForDupes: false, loading: false })
+  async componentDidUpdate() {
+    await this.fetchPeopleAndUpdateShards()
+  }
+
+  async fetchPeopleAndUpdateShards() {
+    await this.props.fetchPeople(this.props.page)
     this.props.updateEmailShards()
   }
 
@@ -48,9 +47,9 @@ class PeoplePage extends Component {
   render() {
     return (
       <PeoplePageWrapper>
-        <h1>SalesLoft Developer Interview</h1>
+        <h1>SalesLoft Integration</h1>
 
-        <PageNavigation page={this.state.page} changePage={this.changePage} />
+        <PageNavigation />
         <LetterCountView />
         <DupeChecker handleChange={this.handleChange} emailImput={this.state.emailInput} bestDupe={this.state.bestDupe} points={this.state.points} />
 
@@ -62,10 +61,11 @@ class PeoplePage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ peopleInfo }) => {
   return {
-    allPeople: state.peopleInfo.allPeople,
-    emailShards: state.peopleInfo.emailShards
+    allPeople: peopleInfo.allPeople,
+    emailShards: peopleInfo.emailShards,
+    page: peopleInfo.page
   }
 }
 

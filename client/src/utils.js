@@ -65,10 +65,12 @@ export const deepMergeShards = (existingShards, newShards) => {
 }
 
 export const countLettersInEmails = (peopleArray) => {
-  return Object.keys(peopleArray).reduce((charTracker, id) => {
-    return peopleArray[id].email_address.split('').reduce((charTracker, char) => {
-      if (char.match(/[a-z]/i)) charTracker[char] ? charTracker[char] += 1 : charTracker[char] = 1
-      return charTracker
-    }, charTracker)
+  const peopleIds = Object.keys(peopleArray)
+  return peopleIds.reduce((letterCount, id) => {
+    const currentEmail = peopleArray[id].email_address
+    return currentEmail.split('').reduce((letterCount, char) => {
+      letterCount[char] ? letterCount[char] += 1 : letterCount[char] = 1
+      return letterCount
+    }, letterCount)
   }, {})
 }

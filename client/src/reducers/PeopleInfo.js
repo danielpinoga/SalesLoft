@@ -4,7 +4,8 @@ import {
   RECEIVE_PEOPLE_FAILURE,
   UPDATE_EMAIL_CHARS,
   TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS,
-  UPDATE_EMAIL_SHARDS
+  UPDATE_EMAIL_SHARDS,
+  UPDATE_PAGE
 } from '../actions/Constants'
 
 const defaultState = {
@@ -62,6 +63,11 @@ export function peopleInfo(state = defaultState, action) {
       newState = { ...state }
       newState.emailShards = deepMergeShards(newState.emailShards, newShards)
       newState.emailsAlreadySharded = { ...newState.emailsAlreadySharded, ...emailsToBeSharded }
+      return newState
+
+    case UPDATE_PAGE:
+      newState = { ...state }
+      newState.page = action.page
       return newState
     default:
       return state

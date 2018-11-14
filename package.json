@@ -4,6 +4,7 @@
     "node": "9.9.0"
   },
   "scripts": {
+    "dev": "foreman start -f Procfile.dev",
     "start": "webpack-dev-server",
     "build": "cd client && npm install && npm run build && cd ..",
     "deploy": "cp -a client/build/. public/",

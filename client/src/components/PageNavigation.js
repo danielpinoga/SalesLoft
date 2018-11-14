@@ -1,15 +1,35 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { updatePage } from '../actions/Actions'
 
-const PageNavigation = ({ page, changePage }) => (
-  <div>
-    {page > 1 ?
-      <span onClick={() => changePage('back')}>Back One Page | </span> :
-      <span >On First Page | </span>}
+const PageNavigation = ({ page, updatePage }) => {
+  const goNext = () => updatePage(page + 1)
+  const goBack = () => updatePage(page - 1)
 
-    Current Page: {page} |
+  const backButton = page > 1 ?
+    <span onClick={goBack}>Back One Page | </span> :
+    <span >On First Page | </span>
 
-    <span onClick={() => changePage('next')}> Next Page</span>
-  </div>
-)
+  const nextButton = <span onClick={goNext}> Next Page</span>
 
-export default PageNavigation
+  return (
+    <div>
+      {backButton}
+      Current Page: {page} |
+      {nextButton}
+    </div>
+  )
+}
+
+
+const mapStateToProps = (state) => {
+  return {
+    page: state.peopleInfo.page
+  }
+}
+
+const mapDispatchToProps = {
+  updatePage
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageNavigation)
