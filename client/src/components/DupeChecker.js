@@ -5,7 +5,7 @@ import { checkForDupeLogic } from '../utils'
 
 class DupeChecker extends Component {
   state = {
-    emailAddress: '',
+    emailInput: '',
     dupeResults: {
       bestDupe: '',
       points: 0

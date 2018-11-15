@@ -1,15 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import PersonCard from './PersonCard'
 import { checkForDupeLogic } from '../utils'
+import { StyledCardContainer } from './Styles'
 
-const StyledPeopleContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-`
 
 const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
   const peopleContent = Object.keys(currentPeople).map(key => {
@@ -21,9 +15,9 @@ const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
   })
 
   return (
-    <StyledPeopleContainer>
+    <StyledCardContainer>
       {loading ? <img src='/loading.gif' alt='loading' /> : peopleContent}
-    </StyledPeopleContainer>
+    </StyledCardContainer>
   )
 }
 

@@ -1,11 +1,5 @@
 import styled from 'styled-components'
 
-export const PeoplePageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
 export const FlexBox = styled.div`
   display: flex;
   align-items: center;
@@ -14,25 +8,18 @@ export const FlexBox = styled.div`
   margin: 10px;
 `
 
-export const Box = styled.div`
-  display: grid;
-  box-shadow: 0 0 6px 0 rgba(58,58,58,0.24);
-  width: 827px;
-  height: 485px;
-  border-top: 6px solid #4a90e2;
-  grid-template: 30% 1fr / 1fr;
-`
-
-export const StyledCharContainer = styled.div`
+export const StyledCardContainer = styled.div`
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
-  height: 20vh;
-  width: 60vw;
-  border: 2px black solid;
+  justify-content: center;
+  padding: 20px;
 `
 
-export const StyledChar = styled.div`
-  margin: 2px 10px;
+export const StyledCard = styled.div`
+  border: solid 2px black;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  width: 350px;
+  text-decoration: none;
+  margin: 10px;
+  padding: 15px;
 `

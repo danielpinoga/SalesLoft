@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import LetterCountView from './LetterCountView'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards, toggleCheckForDupes } from '../actions/Actions'
-import { PeoplePageWrapper } from './Styles'
-import DupeChecker from './DupeChecker';
-import PageNavigation from './PageNavigation';
-import PeopleList from './PeopleList';
+import { FlexBox } from './Styles'
+import DupeChecker from './DupeChecker'
+import PageNavigation from './PageNavigation'
+import PeopleList from './PeopleList'
 
 
 class PeoplePage extends Component {
@@ -26,7 +26,7 @@ class PeoplePage extends Component {
 
   render() {
     return (
-      <PeoplePageWrapper>
+      <FlexBox>
         <h1>SalesLoft Integration</h1>
 
         <PageNavigation />
@@ -34,9 +34,8 @@ class PeoplePage extends Component {
         <button onClick={this.props.toggleCheckForDupes}>Toggle Check For Dupes</button>
 
         <DupeChecker />
-
         <PeopleList />
-      </PeoplePageWrapper>
+      </FlexBox>
     )
   }
 }
