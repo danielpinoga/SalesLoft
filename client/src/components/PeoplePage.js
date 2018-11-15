@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import LetterCountView from './LetterCountView'
+import LetterContainer from './LetterContainer'
 import { fetchPeople } from '../actions/AsyncActions'
 import { updateEmailShards, toggleCheckForDupes } from '../actions/Actions'
 import { FlexBox } from './Styles'
@@ -30,7 +30,7 @@ class PeoplePage extends Component {
         <h1>SalesLoft Integration</h1>
 
         <PageNavigation />
-        <LetterCountView />
+        <LetterContainer />
         <button onClick={this.props.toggleCheckForDupes}>Toggle Check For Dupes</button>
 
         <DupeChecker />

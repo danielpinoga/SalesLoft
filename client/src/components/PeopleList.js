@@ -21,7 +21,6 @@ const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
   )
 }
 
-
 const mapStateToProps = (state) => {
   return {
     currentPeople: state.peopleInfo.currentPeople,
