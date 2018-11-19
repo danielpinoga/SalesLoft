@@ -1,17 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PersonCard from './PersonCard'
-import { checkForDupeLogic } from '../utils'
 import { StyledCardContainer } from './Styles'
 
 
 const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
   const peopleContent = Object.keys(currentPeople).map(key => {
     const person = currentPeople[key]
-    //TODO - put dupeResults in store (a re-render rechecks dupes)
-    const dupeResults = checkForDupes ? checkForDupeLogic(person.email_address, emailShards) : {}
-
-    return <PersonCard key={key} person={person} dupeResults={dupeResults} />
+    return <PersonCard key={key} person={person} />
   })
 
   return (

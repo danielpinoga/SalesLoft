@@ -1,13 +1,10 @@
-import { determineUnshardedEmails, shardMultipleEmails, deepMergeShards } from '../utils'
 import {
   RECEIVE_PEOPLE_SUCCESS,
   RECEIVE_PEOPLE_FAILURE,
   SET_CURRENT_PEOPLE,
   UPDATE_EMAIL_CHARS,
   TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS,
-  UPDATE_EMAIL_SHARDS,
-  UPDATE_PAGE,
-  TOGGLE_CHECK_FOR_DUPES
+  UPDATE_PAGE
 } from '../actions/Constants'
 
 const defaultState = {
@@ -70,21 +67,9 @@ export function peopleInfo(state = defaultState, action) {
       newState.letterCount = action.letterCount
       return newState
 
-    case UPDATE_EMAIL_SHARDS:
-      const emailsToBeSharded = determineUnshardedEmails(state.allPeople, state.emailsAlreadySharded)
-      const newShards = shardMultipleEmails(emailsToBeSharded)
-
-      newState.emailShards = deepMergeShards(newState.emailShards, newShards)
-      newState.emailsAlreadySharded = { ...newState.emailsAlreadySharded, ...emailsToBeSharded }
-      return newState
-
     case UPDATE_PAGE:
       newState.page = page
       newState.loading = true
-      return newState
-
-    case TOGGLE_CHECK_FOR_DUPES:
-      newState.checkForDupes = !state.checkForDupes
       return newState
 
     default:

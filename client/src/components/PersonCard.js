@@ -6,12 +6,6 @@ const PersonCard = ({ person, dupeResults }) => (
     <div>Name: {person.display_name}</div>
     <div>Email: {person.email_address}</div>
     <div>Job Title: {person.title}</div>
-    {dupeResults.bestDupe ? (
-      <div>
-        <div>Best Dupe: {dupeResults.bestDupe}</div>
-        <div>Points: {dupeResults.points}</div>
-      </div>
-    ) : null}
   </StyledCard>
 )
 

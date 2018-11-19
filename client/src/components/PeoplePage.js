@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import LetterContainer from './LetterContainer'
 import { fetchPeople } from '../actions/AsyncActions'
-import { updateEmailShards, toggleCheckForDupes } from '../actions/Actions'
+import { updateEmailShards } from '../actions/Actions'
 import { FlexBox } from './Styles'
-import DupeChecker from './DupeChecker'
 import PageNavigation from './PageNavigation'
 import PeopleList from './PeopleList'
 
@@ -31,9 +30,6 @@ class PeoplePage extends Component {
 
         <PageNavigation />
         <LetterContainer />
-        <button onClick={this.props.toggleCheckForDupes}>Toggle Check For Dupes</button>
-
-        <DupeChecker />
         <PeopleList />
       </FlexBox>
     )
@@ -48,8 +44,7 @@ const mapStateToProps = ({ peopleInfo }) => {
 
 const mapDispatchToProps = {
   fetchPeople,
-  updateEmailShards,
-  toggleCheckForDupes
+  updateEmailShards
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeoplePage)
