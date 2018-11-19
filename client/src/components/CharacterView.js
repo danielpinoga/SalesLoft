@@ -16,7 +16,7 @@ const CharacterView = ({ char, letterCount }) => {
 
 const mapStateToProps = (state) => {
   return {
-    letterCount: state.peopleInfo.letterCount
+    letterCount: state.emailInfo.letterCount
   }
 }
 export default connect(mapStateToProps)(CharacterView)

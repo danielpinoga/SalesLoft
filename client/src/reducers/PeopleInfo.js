@@ -2,8 +2,6 @@ import {
   RECEIVE_PEOPLE_SUCCESS,
   RECEIVE_PEOPLE_FAILURE,
   SET_CURRENT_PEOPLE,
-  UPDATE_EMAIL_CHARS,
-  TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS,
   UPDATE_PAGE
 } from '../actions/Constants'
 
@@ -13,8 +11,6 @@ const defaultState = {
   currentPeople: {},
   page: 1,
   loading: false,
-  letterCount: {},
-  countLettersForAllEmails: false,
 }
 
 export function peopleInfo(state = defaultState, action) {
@@ -54,14 +50,6 @@ export function peopleInfo(state = defaultState, action) {
     case SET_CURRENT_PEOPLE:
       newState.currentPeople = state.allPeopleByPageSize[pageSize][page]
       newState.loading = false
-      return newState
-
-    case TOGGLE_COUNT_LETTERS_FOR_ALL_EMAILS:
-      newState.countLettersForAllEmails = !newState.countLettersForAllEmails
-      return newState
-
-    case UPDATE_EMAIL_CHARS:
-      newState.letterCount = action.letterCount
       return newState
 
     case UPDATE_PAGE:

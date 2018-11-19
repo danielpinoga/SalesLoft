@@ -28,8 +28,8 @@ const mapStateToProps = (state) => {
   return {
     allPeople: state.peopleInfo.allPeople,
     currentPeople: state.peopleInfo.currentPeople,
-    letterCount: state.peopleInfo.letterCount,
-    countLettersForAllEmails: state.peopleInfo.countLettersForAllEmails
+    letterCount: state.emailInfo.letterCount,
+    countLettersForAllEmails: state.emailInfo.countLettersForAllEmails
   }
 }
 

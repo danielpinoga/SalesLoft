@@ -31,8 +31,8 @@ const LetterCountContent = ({ letterCount, countLettersForAllEmails, toggleCount
 
 const mapStateToProps = (state) => {
   return {
-    letterCount: state.peopleInfo.letterCount,
-    countLettersForAllEmails: state.peopleInfo.countLettersForAllEmails
+    letterCount: state.emailInfo.letterCount,
+    countLettersForAllEmails: state.emailInfo.countLettersForAllEmails
   }
 }
 
