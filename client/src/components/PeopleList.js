@@ -4,7 +4,7 @@ import PersonCard from './PersonCard'
 import { StyledCardContainer } from './Styles'
 
 
-const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
+const PeopleList = ({ loading, currentPeople }) => {
   const peopleContent = Object.keys(currentPeople).map(key => {
     const person = currentPeople[key]
     return <PersonCard key={key} person={person} />
@@ -20,9 +20,7 @@ const PeopleList = ({ loading, emailShards, currentPeople, checkForDupes }) => {
 const mapStateToProps = (state) => {
   return {
     currentPeople: state.peopleInfo.currentPeople,
-    emailShards: state.peopleInfo.emailShards,
     loading: state.peopleInfo.loading,
-    checkForDupes: state.peopleInfo.checkForDupes
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyledCard } from './Styles'
 
-const PersonCard = ({ person, dupeResults }) => (
+const PersonCard = ({ person }) => (
   <StyledCard to={`/people/${person.id}`}>
     <div>Name: {person.display_name}</div>
     <div>Email: {person.email_address}</div>

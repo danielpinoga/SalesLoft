@@ -13,11 +13,8 @@ const defaultState = {
   currentPeople: {},
   page: 1,
   loading: false,
-  checkForDupes: false,
   letterCount: {},
   countLettersForAllEmails: false,
-  emailShards: {},
-  emailsAlreadySharded: {}
 }
 
 export function peopleInfo(state = defaultState, action) {
